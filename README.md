@@ -1,42 +1,46 @@
-# Bibine - Boutique en ligne de vin
+# 🍷 **Bibine - Boutique en ligne de vin** 🍇
 
-## Description
-Bibine est une boutique en ligne spécialisée dans la vente de vin. Le site permet aux utilisateurs de naviguer dans différentes catégories de vins, d'ajouter des produits à leur panier, et de passer des commandes. Le site inclut également une fonctionnalité de notation et de commentaire sur les produits.
+Bienvenue sur **Bibine**, la boutique en ligne où vous pouvez découvrir, acheter et apprécier des vins de qualité ! 🍾🍷  
+Naviguez à travers notre sélection de vins, laissez des avis et trouvez vos nouveaux coups de cœur. Cheers ! 🥂
 
-## Technologies utilisées
-- **PHP** : Langage principal pour le backend.
-- **MySQL** : Base de données relationnelle.
-- **HTML/CSS/JS** : Technologies utilisées pour le frontend.
+## 🚀 **Qu'est-ce que Bibine ?**
+**Bibine** est une plateforme de vente en ligne dédiée aux passionnés de vin. Que vous soyez amateur ou connaisseur, nous vous offrons un large choix de vins classés par catégorie. Ajoutez des produits à votre panier, passez des commandes, et donnez votre avis sur vos vins préférés !
 
-## Installation
+## 🔧 **Technologies utilisées**
+- **PHP** : Langage utilisé pour le backend et la gestion des commandes.
+- **MySQL** : Base de données pour gérer les utilisateurs, les produits et les commandes.
+- **HTML/CSS/JS** : Pour créer une expérience utilisateur fluide et moderne.
 
+## 🛠️ **Comment installer Bibine ?**
 1. Clonez ce repository sur votre machine :
     ```bash
     git clone https://github.com/olivia-dondas/boutique-en-ligne.git
     ```
-2. Configurez votre base de données MySQL et importez les tables SQL nécessaires.
-3. Lancez le serveur PHP localement avec votre outil préféré (comme MAMP ou XAMPP).
+2. Configurez votre base de données MySQL et importez les tables SQL fournies dans le dossier `database/`.
+3. Lancez le serveur PHP de votre choix (ex. : MAMP, XAMPP, ou tout autre serveur local).
 
-## Structure du projet
-- `src/` : Contient tous les fichiers PHP du projet.
-- `public/` : Contient les fichiers accessibles au public, comme les images et le frontend.
-- `database/` : Contient les scripts de création de base de données (MCD, SQL).
+## 🗂️ **Structure du projet**
+Voici l'organisation des fichiers de Bibine :
+- `src/` : Contient tous les fichiers PHP pour la logique backend.
+- `public/` : Contient les fichiers publics comme les images et le frontend.
+- `database/` : Contient les scripts SQL pour la création de la base de données.
 
-## Fonctionnalités
-- **Gestion des utilisateurs** : Inscription, connexion, gestion du profil utilisateur.
-- **Catalogue de produits** : Navigation par catégories de vin, vue détaillée des produits.
-- **Panier et commande** : Ajouter des produits au panier, passer des commandes et suivre l'état des commandes.
-- **Avis produits** : Laisser un avis et une note sur chaque produit.
+## 🛒 **Fonctionnalités principales**
+- **Gestion des utilisateurs** : Créez un compte, connectez-vous et gérez votre profil.
+- **Catalogue de produits** : Explorez nos vins par catégorie et découvrez de nouveaux produits.
+- **Panier et commande** : Ajoutez des produits à votre panier et passez des commandes facilement.
+- **Avis produits** : Partagez votre opinion en laissant un avis et une note sur les produits.
 
-## Base de données
-La base de données comporte plusieurs tables, dont :
-- **user** : Utilisateur (id, nom, email, mot de passe, rôle).
-- **product** : Produits (id, nom, description, prix, stock, catégorie).
-- **cart** : Panier d'achat de l'utilisateur.
-- **order** : Commande de l'utilisateur.
-- **review** : Avis laissé sur les produits.
+## 💾 **Base de données**
+La base de données contient plusieurs tables importantes :
+- **user** : Informations sur les utilisateurs (id, nom, email, mot de passe, rôle).
+- **product** : Détails sur les produits (id, nom, description, prix, stock, catégorie).
+- **cart** : Le panier d'achat de chaque utilisateur.
+- **order** : Les commandes passées par les utilisateurs.
+- **review** : Les avis laissés par les utilisateurs sur les produits.
 
-## Auteurs et contributeurs
-- **Olivia**
-- **Scott** 
-- **Théo** 
+## 🙌 **Auteurs et contributeurs**
+- **Olivia**  💻
+- **Scott**  🔧
+- **Théo** 🎨
+
