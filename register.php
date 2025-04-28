@@ -1,5 +1,7 @@
 <?php
 
+require_once 'config.php'; 
+
 $message = '';
 
 if (
@@ -25,16 +27,16 @@ if (
     if ($age < 18) {
         $message = 'You must be at least 18 years old to register.';
     } else {
-        $check = $pdo->prepare('SELECT id FROM users WHERE email = ?');
+        $check = $pdo->prepare('SELECT id FROM user WHERE email = ?');
         $check->execute([$email]);
         if ($check->rowCount() > 0) {
             $message = 'Email already registered.';
         } else {
-            $stmt = $pdo->prepare('INSERT INTO users (first_name, last_name, birth_date, address, email, password) VALUES (?, ?, ?, ?, ?, ?)');
+            $stmt = $pdo->prepare('INSERT INTO user (first_name, last_name, birth_date, address, email, password) VALUES (?, ?, ?, ?, ?, ?)');
             if ($stmt->execute([$first_name, $last_name, $birth_date, $address, $email, $password])) {
-                $message = 'Registration successful! You can now login.';
+                $message = 'Inscription Réussi tu peux aller te connecter.';
             } else {
-                $message = 'Registration failed.';
+                $message = 'Inscription refusé.';
             }
         }
     }
