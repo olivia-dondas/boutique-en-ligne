@@ -1,5 +1,6 @@
 <?php
 session_start();
+require_once 'config.php'; 
 
 $message = '';
 
@@ -7,7 +8,7 @@ if (!empty($_POST['email']) && !empty($_POST['password'])) {
     $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
     $password = $_POST['password'];
 
-    $stmt = $pdo->prepare('SELECT * FROM users WHERE email = ?');
+    $stmt = $pdo->prepare('SELECT * FROM user WHERE email = ?');
     $stmt->execute([$email]);
     $user = $stmt->fetch();
 
