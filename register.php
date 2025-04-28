@@ -30,7 +30,7 @@ if (
         if ($check->rowCount() > 0) {
             $message = 'Email already registered.';
         } else {
-            $stmt = $pdo->prepare('INSERT INTO users (prénom, nom ,date de naissance, adresse, email, password) VALUES (?, ?, ?, ?, ?, ?)');
+            $stmt = $pdo->prepare('INSERT INTO users (first_name, last_name, birth_date, address, email, password) VALUES (?, ?, ?, ?, ?, ?)');
             if ($stmt->execute([$first_name, $last_name, $birth_date, $address, $email, $password])) {
                 $message = 'Registration successful! You can now login.';
             } else {
@@ -63,10 +63,10 @@ if (
     <input type="text" name="Adresse" placeholder="Adresse" required><br>
     <input type="email" name="email" placeholder="Email" required><br>
     <input type="password" name="Mot de passe" placeholder="Mot de Passe" required><br>
-    <button type="submit">Inscription</button>
+    <button type="submit">Register</button>
 </form>
 
-<p>Si déja un compte ? <a href="login.php">Connecte-toi</a></p>
+<p>Already have an account? <a href="login.php">Login here</a></p>
 
 </body>
 </html>
