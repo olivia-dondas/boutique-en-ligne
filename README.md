@@ -12,7 +12,7 @@ Bibine est une boutique en ligne spécialisée dans la vente de vin. Le site per
 
 1. Clonez ce repository sur votre machine :
     ```bash
-    git clone https://github.com/ton-repository/bibine.git
+    git clone https://github.com/olivia-dondas/boutique-en-ligne.git
     ```
 2. Configurez votre base de données MySQL et importez les tables SQL nécessaires.
 3. Lancez le serveur PHP localement avec votre outil préféré (comme MAMP ou XAMPP).
