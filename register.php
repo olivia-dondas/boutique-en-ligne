@@ -5,19 +5,20 @@ require_once 'config.php';
 $message = '';
 
 if (
-    !empty($_POST['first_name']) &&
-    !empty($_POST['last_name']) &&
+    !empty($_POST['last_name']) && 
+    !empty($_POST['first_name']) && 
     !empty($_POST['birth_date']) &&
     !empty($_POST['address']) &&
     !empty($_POST['email']) &&
     !empty($_POST['password'])
 ) {
+    $last_name = htmlspecialchars($_POST['last_name']); 
     $first_name = htmlspecialchars($_POST['first_name']);
-    $last_name = htmlspecialchars($_POST['last_name']);
     $birth_date = $_POST['birth_date'];
     $address = htmlspecialchars($_POST['address']);
     $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
     $password = password_hash($_POST['password'], PASSWORD_BCRYPT);
+    $role = 'user'; // Valeur par défaut pour le rôle
 
     // Vérification de l'âge
     $today = new DateTime();
@@ -32,8 +33,8 @@ if (
         if ($check->rowCount() > 0) {
             $message = 'Email already registered.';
         } else {
-            $stmt = $pdo->prepare('INSERT INTO user (first_name, last_name, birth_date, address, email, password) VALUES (?, ?, ?, ?, ?, ?)');
-            if ($stmt->execute([$first_name, $last_name, $birth_date, $address, $email, $password])) {
+            $stmt = $pdo->prepare('INSERT INTO user (last_name, first_name, email, password, birth_date, role, created_at) VALUES (?, ?, ?, ?, ?, ?, NOW())');
+            if ($stmt->execute([$last_name, $first_name, $email, $password, $birth_date, $role])) {
                 $message = 'Inscription Réussi tu peux aller te connecter.';
             } else {
                 $message = 'Inscription refusé.';
@@ -59,12 +60,12 @@ if (
 <?php endif; ?>
 
 <form method="post" action="">
-    <input type="text" name="Prénom" placeholder="Prénom" required><br>
-    <input type="text" name="Nom" placeholder="Nom" required><br>
-    <input type="date" name="Date de Naissance" required><br>
-    <input type="text" name="Adresse" placeholder="Adresse" required><br>
+    <input type="text" name="last_name" placeholder="Nom" required><br>
+    <input type="text" name="first_name" placeholder="Prénom" required><br>
+    <input type="date" name="birth_date" required><br>
+    <input type="text" name="address" placeholder="Adresse" required><br>
     <input type="email" name="email" placeholder="Email" required><br>
-    <input type="password" name="Mot de passe" placeholder="Mot de Passe" required><br>
+    <input type="password" name="password" placeholder="Mot de Passe" required><br>
     <button type="submit">Inscription</button>
 </form>
 
