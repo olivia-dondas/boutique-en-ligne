@@ -1,10 +1,10 @@
 <?php
 session_start();
-require_once 'config.php'; 
+require_once '../src/config.php'; // Inclure le fichier de configuration
 
 // Vérifier si l'utilisateur est connecté
 if (!isset($_SESSION['user_id'])) {
-    header('Location: login.php');
+    header('Location: ../public/login.php'); 
     exit();
 }
 
@@ -25,7 +25,7 @@ if (!$user) {
 <head>
     <meta charset="UTF-8">
     <title>Profil - Wine Shop</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../style/login.css"> 
 </head>
 <body>
 
@@ -40,7 +40,7 @@ if (!$user) {
     <p><strong>Date d'inscription :</strong> <?= htmlspecialchars($user['created_at']) ?></p>
 </div>
 
-<a href="logout.php">Se déconnecter</a>
+<a href="../public/logout.php">Se déconnecter</a> 
 
 </body>
 </html>
