@@ -31,7 +31,7 @@ if (
         $check = $pdo->prepare('SELECT id FROM user WHERE email = ?');
         $check->execute([$email]);
         if ($check->rowCount() > 0) {
-            $message = 'Email already registered.';
+            $message = 'Email déja Enregistré.';
         } else {
             $stmt = $pdo->prepare('INSERT INTO user (last_name, first_name, email, password, birth_date, role, created_at) VALUES (?, ?, ?, ?, ?, ?, NOW())');
             if ($stmt->execute([$last_name, $first_name, $email, $password, $birth_date, $role])) {

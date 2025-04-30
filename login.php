@@ -21,7 +21,7 @@ if (!empty($_POST['email']) && !empty($_POST['password'])) {
         header('Location: profil.php');
         exit();
     } else {
-        $message = 'Incorrect email or password.';
+        $message = 'Email ou Mot de passe Incorrect.';
     }
 }
 ?>
