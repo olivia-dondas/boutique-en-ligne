@@ -1,13 +1,13 @@
 <?php
 session_start();
 
-// Détruire toutes les variables de session
+// Détruire toutes les sessions
 session_unset();
 
 // Détruire la session
 session_destroy();
 
-// Rediriger vers la page de connexion
+// Retour à la connexion
 header('Location: login.php');
 exit();
 ?>
