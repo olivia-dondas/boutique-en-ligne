@@ -1,6 +1,8 @@
 <?php
-session_start();
-require_once '../src/config.php'; // Chemin mis à jour 
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+require_once __DIR__ . '/../config/config.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest') {
     $response = ['success' => false, 'message' => ''];
@@ -38,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SERVER['HTTP_X_REQUESTED_WI
 <head>
     <meta charset="UTF-8">
     <title>Login - Bibine Shop</title>
-    <link rel="stylesheet" href="../style/login.css"> <!-- Chemin mis à jour -->
+    <link rel="stylesheet" href="../assets/css/login.css"> 
 </head>
 <body>
 
