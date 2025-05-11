@@ -45,5 +45,12 @@ class Product {
         ");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function getAllCategories() {
+        $stmt = $this->pdo->query("
+            SELECT * FROM category
+        ");
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }   
 }
 ?>
