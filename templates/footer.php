@@ -18,6 +18,6 @@
     </div>
 </footer>
 
-<script src="<?= BASE_URL ?>/assets/js/main.js"></script>
+<script src="../assets/js/auth.js"></script>
 </body>
 </html>

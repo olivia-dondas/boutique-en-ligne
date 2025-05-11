@@ -97,10 +97,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <title>Inscription - Bibine</title>
+    <link rel="stylesheet" href="https://cdn.tailwindcss.com">
     <link rel="stylesheet" href="../assets/css/auth.css">
     <script src="../assets/js/auth.js" defer></script>
 </head>
 <body>
+<?php include '../templates/header.php'; ?>
     <div class="auth-container">
         <h2>Créer un compte</h2>
         
@@ -146,5 +148,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             Déjà un compte ? <a href="../public/login.php">Se connecter</a>
         </p>
     </div>
+
+    <?php include '../templates/footer.php'; ?>
 </body>
+
 </html>
