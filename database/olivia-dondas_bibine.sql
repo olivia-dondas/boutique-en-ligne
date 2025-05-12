@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost:8889
--- Généré le : dim. 11 mai 2025 à 22:16
+-- Généré le : lun. 12 mai 2025 à 09:53
 -- Version du serveur : 8.0.40
 -- Version de PHP : 8.3.14
 
@@ -56,7 +56,12 @@ INSERT INTO `brand` (`id`, `name`) VALUES
 (17, 'Krug'),
 (18, 'Johnnie Walker'),
 (19, 'Grey Goose'),
-(20, 'Patrón');
+(20, 'Patrón'),
+(21, 'Ruinart'),
+(22, 'Laurent-Perrier'),
+(23, 'E. Guigal'),
+(24, 'Gérard Bertrand'),
+(25, 'Domaine Tempier');
 
 -- --------------------------------------------------------
 
@@ -108,6 +113,41 @@ INSERT INTO `category` (`id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `grape`
+--
+
+CREATE TABLE `grape` (
+  `id` int NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `description` text
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Déchargement des données de la table `grape`
+--
+
+INSERT INTO `grape` (`id`, `name`, `description`) VALUES
+(1, 'Merlot', NULL),
+(2, 'Cabernet Sauvignon', NULL),
+(3, 'Cabernet Franc', NULL),
+(4, 'Pinot Noir', NULL),
+(5, 'Chardonnay', NULL),
+(6, 'Sauvignon Blanc', NULL),
+(7, 'Riesling', NULL),
+(8, 'Syrah/Shiraz', NULL),
+(9, 'Grenache', NULL),
+(10, 'Mourvèdre', NULL),
+(11, 'Nebbiolo', NULL),
+(12, 'Sangiovese', NULL),
+(13, 'Tempranillo', NULL),
+(14, 'Albariño', NULL),
+(15, 'Macabeo', NULL),
+(16, 'Viognier', NULL),
+(17, 'Chenin Blanc', NULL);
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `order`
 --
 
@@ -147,97 +187,92 @@ CREATE TABLE `product` (
   `stock` int NOT NULL,
   `category_id` int NOT NULL,
   `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
-  `featured` tinyint(1) DEFAULT '0'
+  `featured` tinyint(1) DEFAULT '0',
+  `region_id` int DEFAULT NULL,
+  `grape_id` int DEFAULT NULL,
+  `color` enum('red','white','rose') COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Déchargement des données de la table `product`
 --
 
-INSERT INTO `product` (`id`, `name`, `description`, `price`, `stock`, `category_id`, `created_at`, `featured`) VALUES
-(1, 'Château Margaux', NULL, 120.00, 10, 1, '2025-05-11 18:05:03', 0),
-(2, 'Whispering Angel', NULL, 25.00, 20, 2, '2025-05-11 18:05:03', 0),
-(3, 'Dom Pérignon', NULL, 180.00, 5, 1, '2025-05-11 18:05:03', 0),
-(4, 'Cloudy Bay', NULL, 35.00, 15, 3, '2025-05-11 18:05:03', 0),
-(106, 'Château Margaux 2018', 'Grand cru classé de Margaux aux tanins soyeux', 589.99, 50, 1, '2025-05-11 17:46:25', 1),
-(107, 'Whispering Angel Rosé 2022', 'Rosé de Provence frais et fruité', 24.99, 150, 3, '2025-05-11 17:46:25', 1),
-(108, 'Dom Pérignon Vintage 2012', 'Champagne de prestige aux arômes complexes', 219.99, 30, 4, '2025-05-11 17:46:25', 1),
-(109, 'Cloudy Bay Sauvignon Blanc', 'Vin blanc néo-zélandais vif et aromatique', 39.99, 80, 2, '2025-05-11 17:46:25', 0),
-(140, 'Château Margaux 2015', 'Velours en bouteille, ce Margaux charme par sa finesse et sa complexité. Un incontournable pour les grandes occasions (ou un mardi soir qui mérite d\'être spécial).', 650.00, 35, 1, '2025-05-11 23:36:52', 1),
-(141, 'Domaine de la Romanée-Conti 2012', 'Le Saint Graal des vins rouges. Chaque gorgée est une légende. Tellement exclusif qu\'il se murmure qu\'il a son propre agent secret.', 15000.00, 3, 1, '2025-05-11 23:36:52', 1),
-(142, 'Château Lafite Rothschild 2017', 'Élégance et puissance, un Pauillac racé qui en impose. Parfait pour impressionner votre belle-mère (ou votre banquier).', 550.00, 28, 1, '2025-05-11 23:36:52', 0),
-(143, 'Château Latour 2014', 'La forteresse des saveurs, un vin solide et profond. Idéal pour les longues gardes... si vous arrivez à résister à l\'envie de l\'ouvrir avant !', 480.00, 42, 1, '2025-05-11 23:36:52', 0),
-(144, 'Gevrey-Chambertin 2018, Domaine Armand Rousseau', 'Pinot noir de Bourgogne dans toute sa splendeur. Fruité, complexe, une danse délicate en bouche. Presque aussi agréable qu\'une sieste au soleil.', 180.00, 60, 1, '2025-05-11 23:36:52', 0),
-(145, 'Hermitage La Chapelle 2016, Paul Jaboulet Aîné', 'Un Rhône septentrional opulent et épicé. Pour les amateurs de sensations fortes... en douceur, bien sûr.', 120.00, 55, 1, '2025-05-11 23:36:52', 0),
-(146, 'Saint-Émilion Grand Cru Classé 2019, Château Angélus', 'Soyeux et charmeur, un vin de la rive droite bordelaise qui séduit dès la première rencontre. Un peu comme un premier rendez-vous réussi.', 280.00, 30, 1, '2025-05-11 23:36:52', 0),
-(147, 'Pomerol 2020, Château Pétrus (Fictif)', 'L\'élixir rouge ultime (dans notre monde fictif, du moins !). Une concentration de fruits et de velours. Tellement bon qu\'il pourrait résoudre les conflits mondiaux.', 5000.00, 5, 1, '2025-05-11 23:36:52', 0),
-(148, 'Côte-Rôtie 2017, Domaine Guigal', 'Viognier et Syrah en parfaite harmonie, un vin parfumé et intense. Un voyage olfactif et gustatif garanti.', 95.00, 70, 1, '2025-05-11 23:36:52', 0),
-(149, 'Barolo Riserva 2015, Giacomo Conterno', 'Le roi des vins italiens, puissant et tannique, avec un potentiel de garde immense. Patience est mère de toutes les saveurs.', 250.00, 20, 1, '2025-05-11 23:36:52', 0),
-(150, 'Rioja Gran Reserva 2011, La Rioja Alta S.A.', 'Un classique espagnol, élégant et complexe, avec des notes de fruits mûrs et d\'épices. Parfait avec des tapas... et une bonne conversation.', 65.00, 80, 1, '2025-05-11 23:36:52', 0),
-(151, 'Pinot Noir de Bourgogne 2020, Domaine Leroy (Fictif)', 'L\'expression ultime du Pinot Noir (dans notre fiction !). Pureté, finesse, une émotion liquide. Rare comme une éclipse totale.', 800.00, 10, 1, '2025-05-11 23:36:52', 0),
-(152, 'Amarone della Valpolicella Classico 2016, Bertani', 'Un vin italien riche et corsé, élaboré à partir de raisins passerillés. Un délice pour les sens, idéal pour les soirées cocooning.', 110.00, 45, 1, '2025-05-11 23:36:52', 0),
-(153, 'Cabernet Sauvignon Napa Valley 2018, Opus One', 'Un mariage californien de l\'élégance bordelaise et de la richesse de la Napa. Un blockbuster en bouteille.', 190.00, 38, 1, '2025-05-11 23:36:52', 0),
-(154, 'Syrah Crozes-Hermitage 2019, Alain Graillot', 'Un Rhône plus accessible mais avec beaucoup de caractère. Fruité, épicé, parfait pour accompagner vos grillades d\'été.', 38.00, 90, 1, '2025-05-11 23:36:52', 0),
-(155, 'Meursault 1er Cru Charmes 2019, Domaine des Comtes Lafon', 'L\'élégance bourguignonne en blanc. Beurre, noisette, une texture soyeuse. Presque trop bon pour être vrai.', 150.00, 25, 2, '2025-05-11 23:36:52', 1),
-(156, 'Sancerre 2021, Domaine Didier Dagueneau (Fictif)', 'Sauvignon blanc de Loire au sommet. Minéralité, agrumes, une vivacité rafraîchissante. Le coup de fouet idéal après une longue journée.', 60.00, 75, 2, '2025-05-11 23:36:52', 0),
-(157, 'Chablis Grand Cru Les Clos 2018, Domaine William Fèvre', 'L\'expression pure du Chardonnay en terre chablisienne. Minéral, ciselé, une longueur en bouche impressionnante. Un vin qui a de la conversation.', 120.00, 30, 2, '2025-05-11 23:36:52', 0),
-(158, 'Pouilly-Fumé 2020, Domaine Serge Dagueneau & Filles', 'Un autre grand Sauvignon de la Loire, avec ses notes fumées caractéristiques. Parfait avec des fruits de mer... et des rêves d\'océan.', 45.00, 85, 2, '2025-05-11 23:36:52', 0),
-(159, 'Riesling Trocken Goldloch GG 2019, Weingut Keller', 'Un Riesling allemand sec et complexe, avec une acidité vibrante et des arômes de fruits blancs et de pierre à fusil. Un vin qui réveille les papilles.', 75.00, 50, 2, '2025-05-11 23:36:52', 0),
-(160, 'Condrieu La Doriane 2020, Domaine Guigal', 'L\'explosion aromatique du Viognier. Abricot, pêche, fleurs blanches, une gourmandise liquide. Presque un parfum en bouteille.', 85.00, 40, 2, '2025-05-11 23:36:52', 0),
-(161, 'Hermitage Blanc 2017, M. Chapoutier', 'Un blanc puissant et complexe du Rhône, à base de Marsanne, Roussanne et Viognier. Un vin de gastronomie qui ne passe pas inaperçu.', 90.00, 35, 2, '2025-05-11 23:36:52', 0),
-(162, 'Sauvignon Blanc Marlborough 2022, Cloudy Bay', 'Le classique néo-zélandais, vif et plein d\'arômes de groseille et de fruit de la passion. Le soleil en bouteille, même quand il pleut.', 38.00, 100, 2, '2025-05-11 23:36:52', 0),
-(163, 'Pinot Blanc Alsace 2021, Domaine Zind-Humbrecht', 'Un blanc alsacien sec et fruité, avec une belle minéralité. Parfait pour accompagner vos tartes flambées (et vos discussions animées).', 32.00, 90, 2, '2025-05-11 23:36:52', 0),
-(164, 'Fiano di Avellino 2020, Feudi di San Gregorio', 'Un blanc italien élégant et parfumé, avec des notes d\'amande et de noisette. Un voyage ensoleillé vers la Campanie.', 40.00, 65, 2, '2025-05-11 23:36:52', 0),
-(165, 'Vermentino di Sardegna 2021, Capichera', 'Un blanc sarde frais et minéral, avec des arômes d\'herbes et d\'agrumes. Le goût des vacances en Méditerranée.', 35.00, 70, 2, '2025-05-11 23:36:52', 0),
-(166, 'Chenin Blanc Savennières 2018, Domaine Nicolas Joly', 'Un blanc de Loire puissant et complexe, avec des notes de miel et de fruits secs. Un vin biodynamique qui a une âme.', 55.00, 45, 2, '2025-05-11 23:36:52', 0),
-(167, 'Gewürztraminer Alsace Grand Cru 2019, Domaine Trimbach', 'Un blanc alsacien aromatique et épicé, avec des notes de litchi et de rose. Un vin exotique qui fait voyager les sens.', 50.00, 55, 2, '2025-05-11 23:36:52', 0),
-(168, 'Viognier Pays d\'Oc 2022, Domaine de la Mordorée (Fictif)', 'Un Viognier du sud de la France plein de fruit et de fraîcheur (dans notre monde imaginaire !). Parfait pour un apéro ensoleillé.', 28.00, 110, 2, '2025-05-11 23:36:52', 0),
-(169, 'Grechetto Colli Martani 2020, Arnaldo Caprai', 'Un blanc italien sec et minéral d\'Ombrie. Une belle découverte pour sortir des sentiers battus.', 30.00, 80, 2, '2025-05-11 23:36:52', 0),
-(170, 'Côtes de Provence Rosé 2022, Château Minuty', 'L\'emblématique rosé de Provence, frais, fruité, parfait pour les apéros ensoleillés et les barbecues entre amis. Le rosé qui fait toujours bonne impression.', 22.00, 150, 3, '2025-05-11 23:36:52', 1),
-(171, 'Côtes de Provence Rosé 2022, Château d\'Esclans Whispering Angel', 'Le chouchou de la Côte d\'Azur, un rosé élégant et délicat, avec des notes de fruits rouges et de fleurs. Presque aussi beau que le coucher de soleil sur la mer.', 28.00, 120, 3, '2025-05-11 23:36:52', 1),
-(172, 'Bandol Rosé 2021, Domaine Tempier', 'Un rosé de Provence plus puissant et vineux, avec une belle structure et des arômes de fruits mûrs et d\'épices. Le rosé pour ceux qui pensent que le rosé, c\'est sérieux.', 35.00, 80, 3, '2025-05-11 23:36:52', 0),
-(173, 'Tavel Rosé 2020, Domaine de la Mordorée', 'Le \"roi des rosés\", un vin riche et corsé du Rhône, avec des notes de fruits rouges et d\'épices. Un rosé qui a du corps et de la conversation.', 30.00, 95, 3, '2025-05-11 23:36:52', 0),
-(174, 'Lirac Rosé 2021, Domaine de la Charbonnière', 'Un autre beau rosé de la Vallée du Rhône, fruité et épicé, une alternative intéressante aux Côtes du Rhône classiques.', 25.00, 110, 3, '2025-05-11 23:36:52', 0),
-(175, 'Rosé de Loire 2022, Domaine des Baumard', 'Un rosé sec et fruité de la Loire, léger et rafraîchissant. Parfait pour accompagner vos salades d\'été et vos pique-niques au bord de l\'eau.', 18.00, 130, 3, '2025-05-11 23:36:52', 0),
-(176, 'Coteaux d\'Aix-en-Provence Rosé 2022, Château La Coste', 'Un rosé élégant et minéral, issu d\'un domaine viticole et artistique. Un rosé qui a du style et de la personnalité.', 26.00, 100, 3, '2025-05-11 23:36:52', 0),
-(177, 'IGP Méditerranée Rosé 2022, Miraval', 'Le rosé de Brad et Angelina (enfin, une partie de leur histoire !), un vin frais et fruité avec une belle minéralité. Un rosé de star... à prix plus abordable.', 24.00, 115, 3, '2025-05-11 23:36:52', 0),
-(178, 'Rosato Toscana 2022, Antinori (Fictif)', 'Un rosé toscan sec et fruité (dans notre imagination !), avec des notes de cerise et d\'agrumes. Le soleil de l\'Italie dans votre verre.', 20.00, 140, 3, '2025-05-11 23:36:52', 0),
-(179, 'Rosado Navarra 2022, Bodegas Ochoa', 'Un rosé espagnol fruité et sec, élaboré principalement à partir de Grenache. Parfait pour accompagner vos tapas et vos soirées animées.', 16.00, 155, 3, '2025-05-11 23:36:52', 0),
-(180, 'Rosé Côtes du Rhône 2022, E. Guigal', 'Un rosé du Rhône accessible et gourmand, avec des arômes de fruits rouges frais. Le rosé de tous les jours qui fait toujours plaisir.', 15.00, 160, 3, '2025-05-11 23:36:52', 0),
-(181, 'Rosé Syrah Pays d\'Oc 2022, Gérard Bertrand', 'Un rosé du Languedoc-Roussillon fruité et épicé, avec une belle fraîcheur. Un vin convivial pour vos moments de détente.', 14.00, 170, 3, '2025-05-11 23:36:52', 0),
-(182, 'Rosé Cabernet d\'Anjou 2022, Domaine Ogereau', 'Un rosé demi-sec de la Loire, fruité et légèrement doux. Parfait pour accompagner vos desserts aux fruits rouges.', 19.00, 125, 3, '2025-05-11 23:36:52', 0),
-(183, 'Rosé Pinot Noir Vin de France 2022, Albert Bichot', 'Un rosé léger et délicat à base de Pinot Noir, avec des arômes de petits fruits rouges. Un rosé élégant pour vos apéritifs raffinés.', 21.00, 135, 3, '2025-05-11 23:36:52', 0),
-(184, 'Rosé Grenache Cinsault Pays d\'Oc 2022, Paul Mas', 'Un rosé du sud de la France facile à boire et plein de fruit. Le compagnon idéal de vos pique-niques improvisés.', 12.00, 180, 3, '2025-05-11 23:36:52', 0),
-(185, 'Champagne Brut Réserve, Veuve Clicquot', 'L\'étiquette jaune emblématique, un champagne équilibré et vineux, parfait pour célébrer toutes les occasions (même le fait d\'avoir survécu à la semaine).', 60.00, 80, 4, '2025-05-11 23:36:52', 1),
-(186, 'Champagne Brut Premier, Bollinger', 'Un champagne puissant et complexe, avec une belle vinosité et des notes de fruits secs. Le champagne des agents secrets... et des gens qui ont bon goût.', 75.00, 65, 4, '2025-05-11 23:36:52', 1),
-(187, 'Champagne Grande Cuvée 170ème Édition, Krug', 'L\'expression ultime du champagne multi-millésimé, une complexité et une richesse inégalées. Une symphonie de saveurs en bulles.', 250.00, 20, 4, '2025-05-11 23:36:52', 1),
-(188, 'Champagne Brut Impérial, Moët & Chandon', 'Le champagne le plus vendu au monde, un classique équilibré et élégant. Parfait pour vos toasts et vos moments de partage.', 55.00, 90, 4, '2025-05-11 23:36:52', 0),
-(189, 'Champagne Rosé Réserve, Laurent-Perrier', 'Un champagne rosé frais et fruité, avec des arômes de petits fruits rouges. Élégant et gourmand, idéal pour vos apéritifs romantiques (ou entre amis).', 70.00, 70, 4, '2025-05-11 23:36:52', 0),
-(190, 'Champagne Blanc de Blancs Brut Nature, Salon (Fictif)', 'L\'apogée du Chardonnay en Champagne, un champagne pur et minéral, sans dosage. Pour les puristes des bulles.', 300.00, 15, 4, '2025-05-11 23:36:52', 0),
-(191, 'Champagne Millésimé 2013, Dom Pérignon', 'Un champagne d\'exception, expression d\'une seule année, avec une complexité et une finesse remarquables. Chaque millésime raconte une histoire.', 220.00, 35, 4, '2025-05-11 23:36:52', 0),
-(192, 'Champagne Blanc de Noirs Brut, Philipponnat', 'Un champagne élaboré à partir de Pinot Noir et de Meunier, offrant une richesse et une vinosité uniques. Pour ceux qui aiment les bulles avec du corps.', 65.00, 75, 4, '2025-05-11 23:36:52', 0),
-(193, 'Champagne Extra Brut, Agrapart & Fils', 'Un champagne de vigneron, précis et minéral, avec un faible dosage. L\'expression authentique du terroir champenois.', 58.00, 85, 4, '2025-05-11 23:36:52', 0),
-(194, 'Champagne Demi-Sec, Ruinart', 'Un champagne doux et fruité, parfait pour accompagner vos desserts et vos moments de gourmandise. Les bulles sucrées de la joie de vivre.', 62.00, 60, 4, '2025-05-11 23:36:52', 0),
-(195, 'Champagne Rosé de Saignée, Francis Egly-Ouriet', 'Un champagne rosé puissant et vineux, élaboré par saignée, avec des arômes intenses de fruits rouges. Un rosé de caractère.', 110.00, 40, 4, '2025-05-11 23:36:52', 0),
-(196, 'Champagne Extra Brut Blanc de Blancs, Pierre Péters', 'Un champagne 100% Chardonnay, avec une minéralité et une pureté exceptionnelles. Un vin ciselé pour les amateurs de sensations vives.', 80.00, 55, 4, '2025-05-11 23:36:52', 0),
-(197, 'Champagne Premier Cru, Larmandier-Bernier', 'Un champagne élégant et équilibré, issu de vignes Premier Cru, avec une belle fraîcheur et une longue finale.', 72.00, 68, 4, '2025-05-11 23:36:52', 0),
-(198, 'Champagne Grand Cru Millésimé, Salon', 'L\'apogée du Chardonnay en Champagne, un champagne pur et minéral, sans dosage. Pour les puristes des bulles.', 300.00, 15, 4, '2025-05-11 23:36:52', 0),
-(199, 'Champagne Rosé, Billecart-Salmon', 'Un rosé délicat et raffiné, avec des arômes subtils de fruits rouges et d\'agrumes. L\'élégance incarnée en rose.', 78.00, 62, 4, '2025-05-11 23:36:52', 0),
-(200, 'Whisky Single Malt Lagavulin 16 ans', 'Un whisky écossais tourbé et puissant, avec des arômes de fumée, d\'iode et d\'épices. Pour les amateurs de sensations fortes... et de saveurs complexes.', 80.00, 50, 5, '2025-05-11 23:36:52', 0),
-(201, 'Rhum Agricole Vieux VSOP, Rhum Clément', 'Un rhum agricole de Martinique, vieilli en fûts de chêne, avec des notes de fruits exotiques, d\'épices et de vanille. Un voyage ensoleillé dans les Caraïbes.', 65.00, 60, 5, '2025-05-11 23:36:52', 0),
-(202, 'Vodka Elyx, Absolut', 'Une vodka suédoise de luxe, distillée dans des alambics en cuivre, pour une pureté et une douceur exceptionnelles. La vodka qui fait briller vos cocktails.', 55.00, 70, 5, '2025-05-11 23:36:52', 0),
-(203, 'Cognac XO, Hennessy', 'Un cognac d\'exception, assemblage d\'eaux-de-vie vieillies pendant de nombreuses années, avec des arômes complexes de fruits confits, d\'épices et de cuir. Le cognac des grandes occasions.', 180.00, 25, 5, '2025-05-11 23:36:52', 0),
-(204, 'Tequila Añejo, Clase Azul Reposado', 'Une tequila mexicaine vieillie en fûts de chêne, avec des notes de vanille, de caramel et d\'épices douces. Une tequila à déguster lentement, pour apprécier toute sa complexité.', 120.00, 30, 5, '2025-05-11 23:36:52', 0),
-(205, 'Gin Mare', 'Un gin méditerranéen, distillé avec des botaniques comme l\'olive, le thym, le romarin et le basilic. Le goût du soleil et des vacances dans votre verre.', 45.00, 80, 5, '2025-05-11 23:36:52', 0),
-(206, 'Armagnac XO, Château de Laubade', 'Un armagnac traditionnel de Gascogne, vieilli en fûts de chêne, avec des arômes de fruits secs, d\'épices et de boisé. Un spiritueux authentique et chaleureux.', 90.00, 45, 5, '2025-05-11 23:36:52', 0),
-(207, 'Bourbon Single Barrel, Blanton\'s', 'Un bourbon américain de caractère, vieilli en fût unique, avec des notes de caramel, de vanille et d\'épices. Chaque bouteille est unique.', 70.00, 55, 5, '2025-05-11 23:36:52', 0),
-(208, 'Calvados XO, Boulard', 'Un eau-de-vie de cidre normande, vieillie en fûts de chêne, avec des arômes de pomme cuite, d\'épices et de boisé. Le goût de la Normandie dans un verre.', 60.00, 65, 5, '2025-05-11 23:36:52', 0),
-(209, 'Grappa Riserva, Nonino', 'Une grappa italienne élégante et parfumée, vieillie en fûts de chêne, avec des notes de fruits secs, d\'amande et de vanille. Un digestif raffiné.', 50.00, 75, 5, '2025-05-11 23:36:52', 0),
-(210, 'Mezcal Añejo, Del Maguey Vida', 'Un mezcal mexicain artisanal, avec des arômes fumés et fruités. Une expérience gustative intense et authentique.', 85.00, 50, 5, '2025-05-11 23:36:52', 0),
-(211, 'Sake Junmai Daiginjo, Dassai 23', 'Un saké japonais d\'exception, élaboré à partir de riz poli à 23%, pour une pureté et une finesse incomparables. Une boisson raffinée et délicate.', 150.00, 20, 5, '2025-05-11 23:36:52', 0),
-(212, 'Pisco Barsol Quebranta', 'Un eau-de-vie de raisin péruvienne, non vieillie, avec des arômes fruités et floraux. L\'ingrédient indispensable du Pisco Sour.', 40.00, 90, 5, '2025-05-11 23:36:52', 0),
-(213, 'Arak Brun, Ksarak', 'Un spiritueux libanais anisé, vieilli en amphores, avec des arômes complexes d\'anis, de fruits secs et d\'épices. Une boisson traditionnelle et envoûtante.', 75.00, 55, 5, '2025-05-11 23:36:52', 0),
-(214, 'Cachaça Envelhecida, Leblon', 'Une cachaça brésilienne vieillie en fûts de chêne, avec des notes de caramel, de vanille et d\'épices. La base parfaite pour une Caïpirinha premium.', 48.00, 80, 5, '2025-05-11 23:36:52', 0);
+INSERT INTO `product` (`id`, `name`, `description`, `price`, `stock`, `category_id`, `created_at`, `featured`, `region_id`, `grape_id`, `color`) VALUES
+(215, 'Château Montrose 2016', 'Grand cru classé Saint-Estèphe au bouquet complexe', 189.00, 25, 1, '2025-05-12 00:43:02', 1, NULL, NULL, NULL),
+(216, 'Château Lynch-Bages 2015', 'Pauillac puissant aux arômes de cassis et de cèdre', 125.00, 30, 1, '2025-05-12 00:43:02', 1, NULL, NULL, NULL),
+(217, 'Domaine de la Janasse Châteauneuf-du-Pape 2018', 'Rhône méridional généreux aux notes d\'épices', 65.00, 40, 1, '2025-05-12 00:43:02', 0, NULL, NULL, NULL),
+(218, 'Château Palmer 2012', 'Margaux d\'exception à la texture soyeuse', 320.00, 15, 1, '2025-05-12 00:43:02', 1, NULL, NULL, NULL),
+(219, 'Domaine Armand Rousseau Gevrey-Chambertin 2017', 'Bourgogne élégant aux tanins fondus', 180.00, 20, 1, '2025-05-12 00:43:02', 0, NULL, NULL, NULL),
+(220, 'Château Rayas Châteauneuf-du-Pape 2016', 'Cult wine du Rhône, rare et intense', 450.00, 8, 1, '2025-05-12 00:43:02', 1, NULL, NULL, NULL),
+(221, 'Tenuta San Guido Sassicaia 2018', 'Super toscan au bouquet complexe', 220.00, 18, 1, '2025-05-12 00:43:02', 1, NULL, NULL, NULL),
+(222, 'Château Cheval Blanc 2014', 'Grand cru Saint-Émilion au style inimitable', 390.00, 12, 1, '2025-05-12 00:43:02', 1, NULL, NULL, NULL),
+(223, 'Domaine du Pegau Châteauneuf-du-Pape 2017', 'Rhône traditionnel aux notes de garrigue', 75.00, 35, 1, '2025-05-12 00:43:02', 0, NULL, NULL, NULL),
+(224, 'Château Léoville Las Cases 2015', 'Saint-Julien classique et racé', 210.00, 22, 1, '2025-05-12 00:43:02', 0, NULL, NULL, NULL),
+(225, 'Domaine Jean-Louis Chave Hermitage 2016', 'Syrah du nord Rhône d\'une grande pureté', 230.00, 14, 1, '2025-05-12 00:43:02', 1, NULL, NULL, NULL),
+(226, 'Château Ausone 2013', 'Saint-Émilion mythique au potentiel exceptionnel', 680.00, 7, 1, '2025-05-12 00:43:02', 1, NULL, NULL, NULL),
+(227, 'Domaine Leroy Vosne-Romanée 2018', 'Bourgogne de prestige au nez envoûtant', 950.00, 5, 1, '2025-05-12 00:43:02', 1, NULL, NULL, NULL),
+(228, 'Château Cos d\'Estournel 2017', 'Saint-Estèphe exotique au style unique', 185.00, 20, 1, '2025-05-12 00:43:02', 0, NULL, NULL, NULL),
+(229, 'Domaine Jamet Côte-Rôtie 2016', 'Syrah du nord Rhône aux arômes floraux', 110.00, 25, 1, '2025-05-12 00:43:02', 0, NULL, NULL, NULL),
+(230, 'Domaine Leflaive Puligny-Montrachet 2018', 'Bourgogne blanc d\'exception', 250.00, 15, 2, '2025-05-12 00:43:03', 1, NULL, NULL, NULL),
+(231, 'Château Smith Haut Lafitte Blanc 2017', 'Grand cru blanc de Graves', 120.00, 20, 2, '2025-05-12 00:43:03', 1, NULL, NULL, NULL),
+(232, 'Domaine Zind-Humbrecht Riesling Rangen 2016', 'Riesling alsacien de terroir', 65.00, 30, 2, '2025-05-12 00:43:03', 0, NULL, NULL, NULL),
+(233, 'Domaine des Comtes Lafon Meursault 2017', 'Bourgogne blanc onctueux', 180.00, 18, 2, '2025-05-12 00:43:03', 1, NULL, NULL, NULL),
+(234, 'Didier Dagueneau Pouilly-Fumé Pur Sang 2018', 'Sauvignon de Loire mythique', 220.00, 12, 2, '2025-05-12 00:43:03', 1, NULL, NULL, NULL),
+(235, 'Domaine Weinbach Gewurztraminer Altenbourg 2019', 'Gewurztraminer aromatique', 45.00, 40, 2, '2025-05-12 00:43:03', 0, NULL, NULL, NULL),
+(236, 'Château Grillet 2016', 'Viognier rare de la vallée du Rhône', 350.00, 8, 2, '2025-05-12 00:43:03', 1, NULL, NULL, NULL),
+(237, 'Domaine Huet Vouvray Moelleux 2015', 'Chenin doux de Loire', 55.00, 25, 2, '2025-05-12 00:43:03', 0, NULL, NULL, NULL),
+(238, 'Domaine Roulot Meursault 2018', 'Bourgogne blanc précis et minéral', 190.00, 15, 2, '2025-05-12 00:43:03', 0, NULL, NULL, NULL),
+(239, 'Egon Müller Scharzhofberger Riesling Kabinett 2017', 'Riesling allemand d\'exception', 180.00, 20, 2, '2025-05-12 00:43:03', 1, NULL, NULL, NULL),
+(240, 'Domaine Coche-Dury Corton-Charlemagne 2016', 'Grand cru bourguignon légendaire', 1200.00, 5, 2, '2025-05-12 00:43:03', 1, NULL, NULL, NULL),
+(241, 'Château d\'Yquem 2015', 'Sauternes mythique au nectar doré', 380.00, 10, 2, '2025-05-12 00:43:03', 1, NULL, NULL, NULL),
+(242, 'Domaine Tempier Bandol Blanc 2019', 'Blanc de Bandol aux accents méditerranéens', 50.00, 35, 2, '2025-05-12 00:43:03', 0, NULL, NULL, NULL),
+(243, 'Domaine Guffens-Heynen Mâcon-Pierreclos 2018', 'Bourgogne blanc accessible', 35.00, 50, 2, '2025-05-12 00:43:03', 0, NULL, NULL, NULL),
+(244, 'Domaine de Chevalier Blanc 2017', 'Grand cru classé de Graves', 130.00, 22, 2, '2025-05-12 00:43:03', 0, NULL, NULL, NULL),
+(245, 'Château d\'Esclans Garrus 2021', 'Rosé de prestige de Provence', 110.00, 15, 3, '2025-05-12 00:43:03', 1, NULL, NULL, NULL),
+(246, 'Domaines Ott Château de Selle 2022', 'Rosé emblématique de Provence', 45.00, 30, 3, '2025-05-12 00:43:03', 1, NULL, NULL, NULL),
+(247, 'Château Minuty M de Minuty 2022', 'Rosé frais et fruité', 28.00, 50, 3, '2025-05-12 00:43:03', 0, NULL, NULL, NULL),
+(248, 'Miraval Rosé 2022', 'Rosé star de Provence', 32.00, 40, 3, '2025-05-12 00:43:03', 1, NULL, NULL, NULL),
+(249, 'Château Sainte Marguerite Symphonie 2022', 'Rosé complexe de Provence', 25.00, 45, 3, '2025-05-12 00:43:03', 0, NULL, NULL, NULL),
+(250, 'Domaine Tempier Bandol Rosé 2021', 'Rosé de garde de Provence', 42.00, 35, 3, '2025-05-12 00:43:03', 1, NULL, NULL, NULL),
+(251, 'Château de Pibarnon Bandol Rosé 2021', 'Rosé structuré de Bandol', 38.00, 30, 3, '2025-05-12 00:43:03', 0, NULL, NULL, NULL),
+(252, 'Clos Cibonne Tibouren Cuvée Caroline 2021', 'Rosé rare au tibouren', 50.00, 25, 3, '2025-05-12 00:43:03', 1, NULL, NULL, NULL),
+(253, 'Château La Coste Rosé 2022', 'Rosé bio de Provence', 27.00, 40, 3, '2025-05-12 00:43:03', 0, NULL, NULL, NULL),
+(254, 'Domaine de la Bégude Rosé 2022', 'Rosé corse aux notes minérales', 23.00, 50, 3, '2025-05-12 00:43:03', 0, NULL, NULL, NULL),
+(255, 'Château de Roquefort Corail 2022', 'Rosé fruité de Provence', 20.00, 60, 3, '2025-05-12 00:43:03', 0, NULL, NULL, NULL),
+(256, 'Domaine de la Sanglière Rosé 2022', 'Rosé traditionnel de Provence', 18.00, 70, 3, '2025-05-12 00:43:03', 0, NULL, NULL, NULL),
+(257, 'Château Vignelaure Rosé 2021', 'Rosé de terroir de Provence', 35.00, 30, 3, '2025-05-12 00:43:03', 0, NULL, NULL, NULL),
+(258, 'Mas de Cadenet Rosé 2022', 'Rosé frais et gourmand', 22.00, 55, 3, '2025-05-12 00:43:03', 0, NULL, NULL, NULL),
+(259, 'Château des Demoiselles Rosé 2022', 'Rosé élégant de Provence', 26.00, 45, 3, '2025-05-12 00:43:03', 0, NULL, NULL, NULL),
+(260, 'Krug Grande Cuvée 169ème Édition', 'Assemblage complexe et riche', 220.00, 12, 4, '2025-05-12 00:43:03', 1, NULL, NULL, NULL),
+(261, 'Dom Pérignon Vintage 2013', 'Champagne de prestige', 190.00, 15, 4, '2025-05-12 00:43:03', 1, NULL, NULL, NULL),
+(262, 'Bollinger La Grande Année 2014', 'Brut millésimé de caractère', 120.00, 20, 4, '2025-05-12 00:43:03', 1, NULL, NULL, NULL),
+(263, 'Louis Roederer Cristal 2015', 'Champagne iconique', 250.00, 10, 4, '2025-05-12 00:43:03', 1, NULL, NULL, NULL),
+(264, 'Pol Roger Sir Winston Churchill 2013', 'Cuvée prestige puissante', 280.00, 8, 4, '2025-05-12 00:43:03', 1, NULL, NULL, NULL),
+(265, 'Taittinger Comtes de Champagne Blanc de Blancs 2012', 'Chardonnay pur et élégant', 160.00, 15, 4, '2025-05-12 00:43:03', 1, NULL, NULL, NULL),
+(266, 'Veuve Clicquot La Grande Dame 2012', 'Cuvée prestige de la maison', 180.00, 12, 4, '2025-05-12 00:43:03', 1, NULL, NULL, NULL),
+(267, 'Laurent-Perrier Grand Siècle Iteration No. 25', 'Assemblage multi-millésimé', 150.00, 18, 4, '2025-05-12 00:43:03', 0, NULL, NULL, NULL),
+(268, 'Billecart-Salmon Brut Réserve', 'Champagne frais et délicat', 65.00, 30, 4, '2025-05-12 00:43:03', 0, NULL, NULL, NULL),
+(269, 'Ruinart Blanc de Blancs', 'Chardonnay pur et minéral', 75.00, 25, 4, '2025-05-12 00:43:03', 0, NULL, NULL, NULL),
+(270, 'Philipponnat Clos des Goisses 2013', 'Champagne de parcellaire', 210.00, 10, 4, '2025-05-12 00:43:03', 1, NULL, NULL, NULL),
+(271, 'Jacques Selosse Substance', 'Champagne d\'auteur oxydatif', 350.00, 6, 4, '2025-05-12 00:43:03', 1, NULL, NULL, NULL),
+(272, 'Egly-Ouriet Grand Cru Brut', 'Champagne de vigneron puissant', 90.00, 20, 4, '2025-05-12 00:43:03', 0, NULL, NULL, NULL),
+(273, 'Drappier Carte d\'Or Brut', 'Champagne pinot noir dominant', 45.00, 40, 4, '2025-05-12 00:43:03', 0, NULL, NULL, NULL),
+(274, 'Larmandier-Bernier Terre de Vertus', 'Champagne nature et minéral', 70.00, 25, 4, '2025-05-12 00:43:03', 0, NULL, NULL, NULL),
+(275, 'Macallan 18 ans Sherry Oak', 'Single malt écossais riche et épicé', 350.00, 10, 5, '2025-05-12 00:43:03', 1, NULL, NULL, NULL),
+(276, 'Hennessy XO', 'Cognac d\'exception aux arômes complexes', 220.00, 15, 5, '2025-05-12 00:43:03', 1, NULL, NULL, NULL),
+(277, 'Patrón Añejo', 'Tequila vieillie en fût de chêne', 90.00, 20, 5, '2025-05-12 00:43:03', 0, NULL, NULL, NULL),
+(278, 'Grey Goose Vodka', 'Vodka française ultra-premium', 50.00, 30, 5, '2025-05-12 00:43:03', 0, NULL, NULL, NULL),
+(279, 'Havana Club 7 años', 'Rhum cubain vieilli 7 ans', 40.00, 25, 5, '2025-05-12 00:43:03', 0, NULL, NULL, NULL),
+(280, 'Chartreuse VEP Jaune', 'Liqueur monastique vieillie', 120.00, 12, 5, '2025-05-12 00:43:03', 1, NULL, NULL, NULL),
+(281, 'Dalmore King Alexander III', 'Single malt écossais composite', 250.00, 8, 5, '2025-05-12 00:43:03', 1, NULL, NULL, NULL),
+(282, 'Clase Azul Reposado', 'Tequila mexicaine haut de gamme', 150.00, 15, 5, '2025-05-12 00:43:03', 1, NULL, NULL, NULL),
+(283, 'Rhum Agricole Neisson 12 ans', 'Rhum martiniquais d\'exception', 110.00, 18, 5, '2025-05-12 00:43:03', 0, NULL, NULL, NULL),
+(284, 'Bombay Sapphire Premier Cru', 'Gin premium aux botaniques rares', 60.00, 22, 5, '2025-05-12 00:43:03', 0, NULL, NULL, NULL),
+(285, 'Louis XIII Cognac', 'Cognac de luxe légendaire', 3000.00, 3, 5, '2025-05-12 00:43:03', 1, NULL, NULL, NULL),
+(286, 'Johnnie Walker Blue Label', 'Blended Scotch whisky d\'exception', 200.00, 10, 5, '2025-05-12 00:43:03', 1, NULL, NULL, NULL),
+(287, 'Absolut Elyx', 'Vodka haut de gamme distillée en cuivre', 70.00, 20, 5, '2025-05-12 00:43:03', 0, NULL, NULL, NULL),
+(288, 'Plantation XO 20th Anniversary', 'Rhum vieux multicaraïbes', 55.00, 25, 5, '2025-05-12 00:43:03', 0, NULL, NULL, NULL),
+(289, 'Bulleit Bourbon 10 ans', 'Bourbon américain vieilli', 50.00, 30, 5, '2025-05-12 00:43:03', 0, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -251,15 +286,39 @@ CREATE TABLE `product_image` (
   `image_url` varchar(255) COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- --------------------------------------------------------
+
 --
--- Déchargement des données de la table `product_image`
+-- Structure de la table `region`
 --
 
-INSERT INTO `product_image` (`id`, `product_id`, `image_url`) VALUES
-(16, 1, '/images/chateau-margaux.jpg'),
-(17, 2, '/images/whispering-angel.jpg'),
-(18, 3, '/images/dom-perignon.jpg'),
-(19, 4, '/images/cloudy-bay.jpg');
+CREATE TABLE `region` (
+  `id` int NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `country` varchar(100) NOT NULL DEFAULT 'France',
+  `description` text
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Déchargement des données de la table `region`
+--
+
+INSERT INTO `region` (`id`, `name`, `country`, `description`) VALUES
+(1, 'Bordeaux', 'France', NULL),
+(2, 'Bourgogne', 'France', NULL),
+(3, 'Vallée de la Loire', 'France', NULL),
+(4, 'Rhône', 'France', NULL),
+(5, 'Champagne', 'France', NULL),
+(6, 'Alsace', 'France', NULL),
+(7, 'Provence', 'France', NULL),
+(8, 'Languedoc-Roussillon', 'France', NULL),
+(9, 'Piémont', 'France', NULL),
+(10, 'Toscane', 'France', NULL),
+(11, 'Napa Valley', 'France', NULL),
+(12, 'Marlborough', 'France', NULL),
+(13, 'Rioja', 'France', NULL),
+(14, 'Galice', 'France', NULL),
+(15, 'Catalogne', 'France', NULL);
 
 -- --------------------------------------------------------
 
@@ -404,6 +463,12 @@ ALTER TABLE `category`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Index pour la table `grape`
+--
+ALTER TABLE `grape`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Index pour la table `order`
 --
 ALTER TABLE `order`
@@ -423,7 +488,9 @@ ALTER TABLE `order_item`
 --
 ALTER TABLE `product`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `category_id` (`category_id`);
+  ADD KEY `category_id` (`category_id`),
+  ADD KEY `fk_product_region` (`region_id`),
+  ADD KEY `fk_product_grape` (`grape_id`);
 
 --
 -- Index pour la table `product_image`
@@ -431,6 +498,12 @@ ALTER TABLE `product`
 ALTER TABLE `product_image`
   ADD PRIMARY KEY (`id`),
   ADD KEY `product_id` (`product_id`);
+
+--
+-- Index pour la table `region`
+--
+ALTER TABLE `region`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Index pour la table `review`
@@ -469,7 +542,7 @@ ALTER TABLE `user_address`
 -- AUTO_INCREMENT pour la table `brand`
 --
 ALTER TABLE `brand`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT pour la table `cart`
@@ -490,6 +563,12 @@ ALTER TABLE `category`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
+-- AUTO_INCREMENT pour la table `grape`
+--
+ALTER TABLE `grape`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+
+--
 -- AUTO_INCREMENT pour la table `order`
 --
 ALTER TABLE `order`
@@ -505,13 +584,19 @@ ALTER TABLE `order_item`
 -- AUTO_INCREMENT pour la table `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=215;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=290;
 
 --
 -- AUTO_INCREMENT pour la table `product_image`
 --
 ALTER TABLE `product_image`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+
+--
+-- AUTO_INCREMENT pour la table `region`
+--
+ALTER TABLE `region`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT pour la table `review`
@@ -571,6 +656,8 @@ ALTER TABLE `order_item`
 -- Contraintes pour la table `product`
 --
 ALTER TABLE `product`
+  ADD CONSTRAINT `fk_product_grape` FOREIGN KEY (`grape_id`) REFERENCES `grape` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_product_region` FOREIGN KEY (`region_id`) REFERENCES `region` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   ADD CONSTRAINT `product_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`);
 
 --
