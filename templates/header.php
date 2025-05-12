@@ -52,20 +52,20 @@
 
                     <!-- Compte utilisateur -->
                     <?php if($isLoggedIn): ?>
-                        <a href="<?= BASE_URL ?>/mon-compte" 
+                        <a href="<?= BASE_URL ?>/client.php" 
                            class="bg-gray-200 px-3 py-1 rounded text-sm hover:bg-gray-300">
                             Mon compte
                         </a>
-                        <a href="<?= BASE_URL ?>/logout" 
+                        <a href="<?= BASE_URL ?>/logout.php" 
                            class="text-gray-600 text-sm hover:text-indigo-600">
                             Déconnexion
                         </a>
                     <?php else: ?>
-                        <a href="<?= BASE_URL ?>/login" 
+                        <a href="<?= BASE_URL ?>/login.php" 
                            class="text-gray-600 text-sm hover:text-indigo-600">
                             Connexion
                         </a>
-                        <a href="<?= BASE_URL ?>/register" 
+                        <a href="<?= BASE_URL ?>/register.php" 
                            class="bg-indigo-600 text-white px-4 py-2 rounded text-sm hover:bg-indigo-700">
                             Inscription
                         </a>
