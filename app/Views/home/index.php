@@ -5,22 +5,7 @@ require_once BASE_PATH . '/app/Views/layouts/header.php';
 $siteName = defined('SITE_NAME') ? SITE_NAME : 'Ma Boutique';
 $pageTitle = $siteName . " - Accueil"; // Titre spécifique pour la page d'accueil
 
-
 ?>
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= htmlspecialchars($pageTitle) ?></title>
-   
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"> 
-    
-    <link rel="stylesheet" href="<?= htmlspecialchars($baseUrl ?? '') ?>css/style.css"> 
-</head>
-<body class="bg-gray-100">
-
-  
 
     <!-- Hero Section Vinicole  -->
     <section class="hero bg-gradient-to-r from-red-900 to-amber-900 text-white py-16 mb-12 text-center">

@@ -1,7 +1,20 @@
 <?php if (!empty($product) && is_array($product)): ?>
+<?php
+// Si image_url existe et n'est pas vide, on l'utilise, sinon on force le chemin complet
+if (isset($product['image_url']) && !empty($product['image_url'])) {
+    // Si le chemin ne commence pas par 'assets/', on l'ajoute
+    $imageUrl = ltrim($product['image_url'], '/');
+    if (strpos($imageUrl, 'assets/') !== 0) {
+        $imageUrl = 'assets/images/' . basename($imageUrl);
+    }
+} else {
+    $imageUrl = 'assets/images/default-wine.jpg';
+}
+echo '<!-- imageUrl: ' . htmlspecialchars($imageUrl) . ' -->';
+?>
 <div class="bg-white rounded-lg shadow overflow-hidden hover:shadow-lg transition">
     <a href="/product/<?= $product['id'] ?>">
-        <img src="<?= BASE_URL . (!empty($product['image_url']) ? ltrim($product['image_url'], '/') : 'assets/images/default-wine.jpg') ?>"
+        <img src="<?= BASE_URL . $imageUrl ?>"
              alt="<?= htmlspecialchars($product['name']) ?>"
              class="w-full h-48 object-cover">
         <div class="p-4">

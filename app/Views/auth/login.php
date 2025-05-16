@@ -26,5 +26,8 @@
         </form>
         <p>Pas encore de compte ? <a href="<?= htmlspecialchars($baseUrl ?? '') ?>auth/showRegisterForm">Inscrivez-vous ici</a>.</p>
     </div>
+    
 </body>
+
+
 </html>
