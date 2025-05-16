@@ -1,0 +1,69 @@
++-------------+       +---------------+       +-----------------+
+|    User     |       |  User_Address |       |     Posts       |
++-------------+       +---------------+       +-----------------+
+| id (PK)     |1----N | id (PK)       |1----N | id (PK)         |
+| last_name   |       | type          |       | title           |
+| first_name  |       | street        |       | body            |
+| email       |       | city          |       | created_at      |
+| password    |       | postcode      |       | status          |
+| birth_date  |       | country       |       | user_id (FK)    |
+| role        |       | is_default    |       +-----------------+
+| created_at  |       | user_id (FK)  |
++-------------+       +---------------+
+     |1
+     |      +---------------+      +-----------------+
+     |      |    Follows    |      |     Review      |
+     |N     +---------------+      +-----------------+
+     +----<>| following_id  |1----N| id (PK)         |
+            | followed_id   |      | comment         |
+            | created_at   |      | rating          |
+            +---------------+      | review_date     |
+                                  | user_id (FK)    |
+                                  | product_id (FK) |
+                                  +-----------------+
+                                        N|
+                                         |1
++---------------+       +---------------+|      +-----------------+
+|    Cart       |       |   Product     ||      |    Category     |
++---------------+       +---------------+|      +-----------------+
+| id (PK)       |1----N| id (PK)        |1      | id (PK)         |
+| created_at    |      | name           |       | name            |
+| user_id (FK)  |      | description    |       +-----------------+
++---------------+      | price          |           1|
+      |1               | stock          |            |N
+      |                | created_at     |      +-----------------+
+      |N               | featured       |      |  Subcategory    |
++---------------+      | color          |      +-----------------+
+|  Cart_Item    |      | category_id(FK)|1----N| id (PK)         |
++---------------+      | brand_id (FK)  |      | name            |
+| id (PK)       |      | grape_id (FK)  |      | category_id(FK) |
+| cart_id (FK)  |      | region_id (FK) |      +-----------------+
+| product_id(FK)|      +---------------+              
+| quantity      |           1|                      
++---------------+            |N                     
+                             |                  +----------+
++-----------------+    +---------------+        |  Brand   |
+|     Order       |    | Product_Image |        +----------+
++-----------------+    +---------------+        | id (PK)  |
+| id (PK)         |1   | id (PK)       |        | name     |
+| total_amount    |    | image_url     |        +----------+
+| order_date      |    | product_id(FK)|            1|
+| status          |    +---------------+             |
+| user_id (FK)    |                                  |N
++-----------------+                            +---------------+
+      |1                                      |    Grape      |
+      |N                                      +---------------+
++---------------+                             | id (PK)       |
+|  Order_Item   |                             | name          |
++---------------+                             | description   |
+| id (PK)       |                             +---------------+
+| order_id (FK) |                                  1|
+| product_id(FK)|                                   |N
+| quantity      |                             +---------------+
+| unit_price    |                             |    Region     |
++---------------+                             +---------------+
+                                              | id (PK)       |
+                                              | name          |
+                                              | country       |
+                                              | description   |
+                                              +---------------+
