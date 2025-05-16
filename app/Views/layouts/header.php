@@ -64,7 +64,7 @@
                         <a href="<?= BASE_URL ?>index.php?url=auth/login" class="text-gray-600 text-sm hover:text-indigo-600">
                             Connexion
                         </a>
-                        <a href="<?= BASE_URL ?>index.php?url=auth/register" class="bg-indigo-600 text-white px-4 py-2 rounded text-sm hover:bg-indigo-700">
+                        <a href="<?= BASE_URL ?>auth/register" class="bg-indigo-600 text-white px-4 py-2 rounded text-sm hover:bg-indigo-700">
                             Inscription
                         </a>
                     <?php endif; ?>
@@ -112,7 +112,7 @@
                         <a href="<?= BASE_URL ?>index.php?url=auth/login" class="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-indigo-600">
                             Connexion
                         </a>
-                        <a href="<?= BASE_URL ?>index.php?url=auth/register" class="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-indigo-600">
+                        <a href="<?= BASE_URL ?>auth/register" class="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-indigo-600">
                             Inscription
                         </a>
                     <?php endif; ?>

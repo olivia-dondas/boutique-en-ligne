@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Inscription - Boutique Bibine</title>
+    <script>const baseUrl = '<?= htmlspecialchars($baseUrl ?? '', ENT_QUOTES, 'UTF-8') ?>';</script>
+    <script src="<?= htmlspecialchars($baseUrl ?? '') ?>assets/js/auth.js"></script>
     <link rel="stylesheet" href="<?= htmlspecialchars($baseUrl ?? '') ?>css/styles.css">
 </head>
 <body>
@@ -30,6 +32,7 @@
             <div>
                 <label for="address">Adresse :</label>
                 <input type="text" name="address" id="address" required>
+            </div> 
             <div>
                 <label for="password">Mot de passe :</label>
                 <input type="password" name="password" id="password" minlength="6" required>
@@ -42,7 +45,6 @@
         </form>
         <p>Déjà un compte ? <a href="<?= htmlspecialchars($baseUrl ?? '') ?>auth/showLoginForm">Connectez-vous ici</a>.</p>
     </div>
-    <script>const baseUrl = '<?= htmlspecialchars($baseUrl ?? '', ENT_QUOTES, 'UTF-8') ?>';</script>
-    <script src="<?= htmlspecialchars($baseUrl ?? '') ?>js/main.js"></script>
+
 </body>
 </html>

@@ -54,4 +54,13 @@ if (class_exists($controllerClassName)) { // L'autoloader de config.php devrait 
         echo "<h1>Page Introuvable</h1>";
     }
 }
+
+if ($url === 'auth/login') {
+    (new \App\Controllers\AuthController())->showLoginForm();
+    exit;
+}
+if ($url === 'auth/register') {
+    (new \App\Controllers\AuthController())->showRegisterForm();
+    exit;
+}
 ?>

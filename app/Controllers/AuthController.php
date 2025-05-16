@@ -137,6 +137,10 @@ class AuthController {
         require BASE_PATH . '/app/Views/auth/login.php';
     }
 
+    public function register() {
+        $this->showRegisterForm();
+    }
+
     // Helper pour rendre les vues
     // BASE_PATH et BASE_URL sont des constantes maintenant
     protected function renderView(string $viewPath, array $data = []) {

@@ -48,7 +48,7 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 // 5. Constantes de l'Application
-define('SITE_NAME', 'TestBibine - Votre Cave d\'Exception');
+define('SITE_NAME', 'Bibine - Votre Cave d\'Exception');
 
 // 6. Autoloader (pour les classes dans app/)
 spl_autoload_register(function ($class_name) {

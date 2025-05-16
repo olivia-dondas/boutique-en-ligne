@@ -1,3 +1,4 @@
+<?php if (!empty($product) && is_array($product)): ?>
 <div class="bg-white rounded-lg shadow overflow-hidden hover:shadow-lg transition">
     <a href="/product/<?= $product['id'] ?>">
         <img src="<?= BASE_URL . (!empty($product['image_url']) ? ltrim($product['image_url'], '/') : 'assets/images/default-wine.jpg') ?>"
@@ -9,3 +10,4 @@
         </div>
     </a>
 </div>
+<?php endif; ?>
