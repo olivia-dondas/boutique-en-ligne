@@ -39,8 +39,4 @@ La base de données contient plusieurs tables importantes :
 - **order** : Les commandes passées par les utilisateurs.
 - **review** : Les avis laissés par les utilisateurs sur les produits.
 
-## 🙌 **Auteurs et contributeurs**
-- **Olivia**  💻
-- **Scott**  🔧
-- **Théo** 🎨
 
