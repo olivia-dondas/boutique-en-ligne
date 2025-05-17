@@ -27,13 +27,13 @@ class ShopController {
 
         // Nettoyage et récupération des filtres depuis GET
         $filters = [
-            'category' => !empty($_GET['category']) ? (int)$_GET['category'] : null,
-            'region'   => !empty($_GET['region']) ? (int)$_GET['region'] : null,    
-            'grape'    => !empty($_GET['grape']) ? (int)$_GET['grape'] : null,       
-            'price_min'=> !empty($_GET['price_min']) ? (float)$_GET['price_min'] : 0,
-            'price_max'=> !empty($_GET['price_max']) ? (float)$_GET['price_max'] : 0, 
-            'page'     => $currentPage,
-            'per_page' => $perPage
+            'category'   => isset($_GET['category']) && $_GET['category'] !== '' ? (int)$_GET['category'] : null,
+            'region'     => isset($_GET['region']) && $_GET['region'] !== '' ? (int)$_GET['region'] : null,
+            'grape'      => isset($_GET['grape']) && $_GET['grape'] !== '' ? (int)$_GET['grape'] : null,
+            'price_min'  => isset($_GET['price_min']) && $_GET['price_min'] !== '' ? (float)$_GET['price_min'] : null,
+            'price_max'  => isset($_GET['price_max']) && $_GET['price_max'] !== '' ? (float)$_GET['price_max'] : null,
+            'page'       => isset($_GET['page']) ? (int)$_GET['page'] : 1,
+            'per_page'   => 12
         ];
         // Assurer que price_max n'est pas inférieur à price_min si les deux sont définis
         if ($filters['price_max'] > 0 && $filters['price_max'] < $filters['price_min']) {
@@ -66,8 +66,12 @@ class ShopController {
             'totalProducts' => $totalProducts,
             'pageTitle' => 'Notre Boutique de Vins'
         ];
-        
-        $this->renderView('shop/index', $dataToView);
+
+        error_log('GET : ' . print_r($_GET, true));
+        error_log('FILTERS : ' . print_r($filters, true));
+        error_log('SQL : ' . $this->productModel->getLastQuery());
+
+        require BASE_PATH . '/app/Views/shop/index.php';
     }
 
     
@@ -118,5 +122,3 @@ class ShopController {
         
     }
 }
-
-?>
