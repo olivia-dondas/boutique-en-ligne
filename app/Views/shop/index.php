@@ -15,7 +15,7 @@ $siteName = defined('SITE_NAME') ? SITE_NAME : 'Ma Boutique';
                     
                     <!-- Le formulaire doit pointer vers l'URL actuelle (shop/index ou shop) -->
 
-<form method="get" action="<?= htmlspecialchars($baseUrl ?? '') ?>index.php?url=shop" class="space-y-4">                        <!-- Filtre Catégorie -->
+            <form method="get" action="/boutique-en-ligne/shop" class="space-y-4">                        <!-- Filtre Catégorie -->
                         <div>
                             <label for="category_filter" class="block text-sm font-medium text-gray-700 mb-1">Catégorie</label>
                             <select id="category_filter" name="category" class="w-full p-2 border rounded-md focus:ring-red-500 focus:border-red-500">
@@ -112,6 +112,12 @@ $siteName = defined('SITE_NAME') ? SITE_NAME : 'Ma Boutique';
                             <?php 
                                 $product = $productData;
                                 $cardPath = BASE_PATH . '/app/Views/partials/product_card.php';
+ $productDetailUrl = (isset($baseUrl) ? htmlspecialchars($baseUrl) : '') . 'shop/show/' . htmlspecialchars($product['id']);
+        ?>
+        <a href="<?= $productDetailUrl ?>" 
+           class="block group bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 ease-in-out overflow-hidden"> 
+            <?php
+
                                 if (file_exists($cardPath)) {
                                     include $cardPath;
                                 } else {
@@ -119,6 +125,7 @@ $siteName = defined('SITE_NAME') ? SITE_NAME : 'Ma Boutique';
                                     break;
                                 }
                             ?>
+                            </a>
                         <?php endforeach; ?>
                     </div>
                 <?php endif; ?>
