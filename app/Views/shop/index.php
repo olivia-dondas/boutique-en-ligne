@@ -107,6 +107,11 @@ $siteName = defined('SITE_NAME') ? SITE_NAME : 'Ma Boutique';
                         </a>
                     </div>
                 <?php else: ?>
+                    <!-- Debug temporaire pour voir les IDs des produits affichés -->
+                    <?php foreach ($products as $p): ?>
+                        <span style="color:red;"><?= htmlspecialchars($p['id']) ?></span> 
+                    <?php endforeach; ?>
+
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mt-8">
                         <?php foreach ($products as $productData): ?>
                             <?php 
@@ -114,18 +119,17 @@ $siteName = defined('SITE_NAME') ? SITE_NAME : 'Ma Boutique';
                                 $cardPath = BASE_PATH . '/app/Views/partials/product_card.php';
  $productDetailUrl = (isset($baseUrl) ? htmlspecialchars($baseUrl) : '') . 'shop/show/' . htmlspecialchars($product['id']);
         ?>
-        <a href="<?= $productDetailUrl ?>" 
-           class="block group bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 ease-in-out overflow-hidden"> 
+        <a href="<?= $productDetailUrl ?>" class="block transition-shadow duration-300 ease-in-out">
             <?php
-
-                                if (file_exists($cardPath)) {
-                                    include $cardPath;
-                                } else {
-                                    echo '<p class="text-red-500 col-span-full">Erreur: Carte produit non trouvée.</p>';
-                                    break;
-                                }
-                            ?>
-                            </a>
+                $product = $productData;
+                $cardPath = BASE_PATH . '/app/Views/partials/product_card.php';
+                if (file_exists($cardPath)) {
+                    include $cardPath;
+                } else {
+                    echo '<p class="text-red-500 col-span-full">Erreur: Carte produit non trouvée.</p>';
+                }
+            ?>
+        </a>
                         <?php endforeach; ?>
                     </div>
                 <?php endif; ?>

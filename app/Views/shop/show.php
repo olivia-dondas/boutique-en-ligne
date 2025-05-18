@@ -20,13 +20,13 @@ require_once BASE_PATH . '/app/Views/layouts/header.php';
                         // Déterminer l'image principale à afficher
                         $mainImageUrl = htmlspecialchars($baseUrl ?? '') . 'assets/images/default-wine-large.jpg'; // Image par défaut
 
-                        if (!empty($productImages) && isset($productImages[0]['image_url'])) {
+                        if (!empty($productImages) && !empty($productImages[0]['image_url'])) {
                             $img = ltrim($productImages[0]['image_url'], '/');
                             if (strpos($img, 'assets/') !== 0) {
                                 $img = 'assets/products/' . $img;
                             }
                             $mainImageUrl = htmlspecialchars($baseUrl ?? '') . $img;
-                        } elseif (isset($product['image_url']) && !empty($product['image_url'])) {
+                        } elseif (!empty($product['image_url'])) {
                             $img = ltrim($product['image_url'], '/');
                             if (strpos($img, 'assets/') !== 0) {
                                 $img = 'assets/products/' . $img;

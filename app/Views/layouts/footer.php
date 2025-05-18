@@ -1,3 +1,4 @@
+
 </main>
 
 <footer class="bg-gray-800 text-white py-8">
@@ -18,6 +19,6 @@
     </div>
 </footer>
 
-<script src="../assets/js/auth.js"></script>
+
 </body>
 </html>

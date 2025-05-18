@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title><?= $pageTitle ?? SITE_NAME ?></title>    <script src="https://cdn.tailwindcss.com"></script>
-<script src="<?= BASE_URL ?>assets/js/auth.js"></script>
+
 </head>
 <body class="bg-gray-100 flex flex-col min-h-screen">
     <?php
@@ -52,12 +52,11 @@
 
                     <!-- Compte utilisateur -->
                     <?php if($isLoggedIn): ?>
-                        <a href="<?= BASE_URL ?>/client.php" 
+                        <a href="<?= rtrim(BASE_URL, '/') ?>/app/Views/client/profil.php"
                            class="bg-gray-200 px-3 py-1 rounded text-sm hover:bg-gray-300">
                             Mon compte
                         </a>
-                        <a href="<?= BASE_URL ?>/logout.php" 
-                           class="text-gray-600 text-sm hover:text-indigo-600">
+                        <a href="<?= BASE_URL ?>index.php?url=auth/logout" class="text-gray-700 hover:text-indigo-600 px-3 py-2 text-sm font-medium">
                             Déconnexion
                         </a>
                     <?php else: ?>
@@ -104,8 +103,7 @@
                            class="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-indigo-600">
                             Mon compte
                         </a>
-                        <a href="<?= BASE_URL ?>/logout" 
-                           class="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-indigo-600">
+                        <a href="<?= BASE_URL ?>index.php?url=auth/logout" class="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-indigo-600">
                             Déconnexion
                         </a>
                     <?php else: ?>
