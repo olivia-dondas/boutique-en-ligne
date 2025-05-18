@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= SITE_NAME ?></title>
-    <script src="https://cdn.tailwindcss.com"></script>
+<title><?= $pageTitle ?? SITE_NAME ?></title>    <script src="https://cdn.tailwindcss.com"></script>
+<script src="<?= BASE_URL ?>assets/js/auth.js"></script>
 </head>
 <body class="bg-gray-100 flex flex-col min-h-screen">
     <?php
@@ -64,7 +64,7 @@
                         <a href="<?= BASE_URL ?>index.php?url=auth/login" class="text-gray-600 text-sm hover:text-indigo-600">
                             Connexion
                         </a>
-                        <a href="<?= BASE_URL ?>auth/register" class="bg-indigo-600 text-white px-4 py-2 rounded text-sm hover:bg-indigo-700">
+                        <a href="<?= BASE_URL ?>index.php?url=auth/register" class="bg-indigo-600 text-white px-4 py-2 rounded text-sm hover:bg-indigo-700">
                             Inscription
                         </a>
                     <?php endif; ?>
@@ -83,7 +83,7 @@
         <!-- Menu mobile (déroulant) -->
         <div class="md:hidden hidden" id="mobile-menu">
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a href="<?= BASE_URL ?>/shop" 
+                <a href="<?= htmlspecialchars($baseUrl ?? '') ?>index.php?url=shop
                    class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-indigo-600">
                     Boutique
                 </a>

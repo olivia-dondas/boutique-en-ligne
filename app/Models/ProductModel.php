@@ -70,9 +70,13 @@ class ProductModel {
     private function buildFilteredQuery(array $filters, bool $countOnly = false): array {
         $sqlBase = $countOnly 
             ? "SELECT COUNT(DISTINCT p.id) as total " 
-            : "SELECT DISTINCT p.id, p.name, p.description, p.price, p.stock, p.featured, p.category_id, c.name as category_name ";
-        
-        $sqlFrom = "FROM product p LEFT JOIN category c ON p.category_id = c.id ";
+            : "SELECT DISTINCT p.id, p.name, p.description, p.price, p.stock, p.featured, p.category_id, c.name as category_name, COALESCE(pi.image_url, 'assets/images/default-wine.jpg') as image_url ";
+
+        // Ajoute la jointure sur product_image
+        $sqlFrom = "FROM product p 
+                    LEFT JOIN category c ON p.category_id = c.id 
+                    LEFT JOIN product_image pi ON p.id = pi.product_id ";
+
         $whereClauses = [];
         $params = [];
 
@@ -88,11 +92,11 @@ class ProductModel {
             $whereClauses[] = "p.grape_id = :grape_id";
             $params[':grape_id'] = $filters['grape'];
         }
-        if (isset($filters['price_min']) && $filters['price_min'] > 0) {
+        if (isset($filters['price_min']) && $filters['price_min'] !== null) {
             $whereClauses[] = "p.price >= :price_min";
             $params[':price_min'] = $filters['price_min'];
         }
-        if (isset($filters['price_max']) && $filters['price_max'] > 0 && $filters['price_max'] >= ($filters['price_min'] ?? 0)) {
+        if (isset($filters['price_max']) && $filters['price_max'] !== null) {
             $whereClauses[] = "p.price <= :price_max";
             $params[':price_max'] = $filters['price_max'];
         }
@@ -118,32 +122,106 @@ class ProductModel {
         return ['sql' => $sql, 'params' => $params];
     }
 
-    public function getFilteredProducts(array $filters): array {
-        $queryData = $this->buildFilteredQuery($filters, false);
-        $stmt = $this->pdo->prepare($queryData['sql']);
-        foreach ($queryData['params'] as $key => &$val) {
-            if (is_int($val)) {
-                $stmt->bindParam($key, $val, PDO::PARAM_INT);
-            } else {
-                $stmt->bindParam($key, $val);
+    public function getFilteredProducts($filters) {
+        try {
+            $sql = "SELECT p.*, pi.image_url, c.name AS category_name
+                    FROM product p
+                    LEFT JOIN product_image pi ON p.id = pi.product_id
+                    LEFT JOIN category c ON p.category_id = c.id
+                    WHERE 1=1";
+            $params = [];
+
+            // Filtre par catégorie
+            if (!empty($filters['category'])) {
+                $sql .= " AND p.category_id = :category";
+                $params[':category'] = (int)$filters['category'];
             }
+
+            // Filtre par région
+            if (!empty($filters['region'])) {
+                $sql .= " AND p.region_id = :region";
+                $params[':region'] = (int)$filters['region'];
+            }
+
+            // Filtre par cépage
+            if (!empty($filters['grape'])) {
+                $sql .= " AND p.grape_id = :grape";
+                $params[':grape'] = (int)$filters['grape'];
+            }
+
+            // Filtre par prix min
+            if (isset($filters['price_min']) && $filters['price_min'] !== '' && is_numeric($filters['price_min'])) {
+                $sql .= " AND p.price >= :price_min";
+                $params[':price_min'] = (float)$filters['price_min'];
+            }
+
+            // Filtre par prix max
+            if (isset($filters['price_max']) && $filters['price_max'] !== '' && is_numeric($filters['price_max'])) {
+                $sql .= " AND p.price <= :price_max";
+                $params[':price_max'] = (float)$filters['price_max'];
+            }
+
+            // Pagination
+            $sql .= " LIMIT :limit OFFSET :offset";
+            $params[':limit'] = (int)($filters['per_page'] ?? 12);
+            $params[':offset'] = ((int)($filters['page'] ?? 1) - 1) * (int)($filters['per_page'] ?? 12);
+
+            $this->lastQuery = $sql;
+
+            $stmt = $this->pdo->prepare($sql);
+            foreach ($params as $key => $value) {
+                $type = is_int($value) ? PDO::PARAM_INT : PDO::PARAM_STR;
+                $stmt->bindValue($key, $value, $type);
+            }
+            $stmt->execute();
+
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        } catch (PDOException $e) {
+            error_log("Product::getFilteredProducts() error: " . $e->getMessage());
+            return [];
         }
-        unset($val);
-        $stmt->execute();
-        return $stmt->fetchAll();
     }
 
     public function countFilteredProducts(array $filters): int {
-        $queryData = $this->buildFilteredQuery($filters, true);
-        $stmt = $this->pdo->prepare($queryData['sql']);
-        foreach ($queryData['params'] as $key => &$val) {
-            if (is_int($val)) {
-                $stmt->bindParam($key, $val, PDO::PARAM_INT);
-            } else {
-                $stmt->bindParam($key, $val);
-            }
+        $sql = "SELECT COUNT(*) as total FROM product p WHERE 1=1";
+        $params = [];
+
+        // Filtre par catégorie
+        if (!empty($filters['category'])) {
+            $sql .= " AND p.category_id = :category";
+            $params[':category'] = (int)$filters['category'];
         }
-        unset($val);
+
+        // Filtre par région
+        if (!empty($filters['region'])) {
+            $sql .= " AND p.region_id = :region";
+            $params[':region'] = (int)$filters['region'];
+        }
+
+        // Filtre par cépage
+        if (!empty($filters['grape'])) {
+            $sql .= " AND p.grape_id = :grape";
+            $params[':grape'] = (int)$filters['grape'];
+        }
+
+        // Filtre par prix min
+        if (isset($filters['price_min']) && $filters['price_min'] !== '' && is_numeric($filters['price_min'])) {
+            $sql .= " AND p.price >= :price_min";
+            $params[':price_min'] = (float)$filters['price_min'];
+        }
+
+        // Filtre par prix max
+        if (isset($filters['price_max']) && $filters['price_max'] !== '' && is_numeric($filters['price_max'])) {
+            $sql .= " AND p.price <= :price_max";
+            $params[':price_max'] = (float)$filters['price_max'];
+        }
+
+        $stmt = $this->pdo->prepare($sql);
+        foreach ($params as $key => $value) {
+            $type = is_int($value) ? PDO::PARAM_INT : PDO::PARAM_STR;
+            $stmt->bindValue($key, $value, $type);
+        }
         $stmt->execute();
         $result = $stmt->fetch();
         return (int)($result['total'] ?? 0);
@@ -154,9 +232,3 @@ class ProductModel {
     }
 }
 
-$cardPath = BASE_PATH . '/app/Views/partials/product_card.php';
-if (file_exists($cardPath)) {
-    include $cardPath; 
-} else {
-    echo '<p class="text-red-500">Erreur: Carte produit non trouvée.</p>';
-}

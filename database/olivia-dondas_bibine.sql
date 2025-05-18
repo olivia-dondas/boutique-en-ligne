@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost:8889
--- Généré le : lun. 12 mai 2025 à 09:53
+-- Généré le : dim. 18 mai 2025 à 08:56
 -- Version du serveur : 8.0.40
 -- Version de PHP : 8.3.14
 
@@ -96,7 +96,7 @@ CREATE TABLE `cart_item` (
 
 CREATE TABLE `category` (
   `id` int NOT NULL,
-  `name` varchar(100) COLLATE utf8mb4_general_ci NOT NULL
+  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -156,7 +156,7 @@ CREATE TABLE `order` (
   `user_id` int NOT NULL,
   `total_amount` decimal(10,2) NOT NULL,
   `order_date` datetime DEFAULT CURRENT_TIMESTAMP,
-  `status` enum('pending','paid','shipped','completed','cancelled') COLLATE utf8mb4_general_ci DEFAULT 'pending'
+  `status` enum('pending','paid','shipped','completed','cancelled') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT 'pending'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -181,8 +181,8 @@ CREATE TABLE `order_item` (
 
 CREATE TABLE `product` (
   `id` int NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `description` text COLLATE utf8mb4_general_ci,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
   `price` decimal(10,2) NOT NULL,
   `stock` int NOT NULL,
   `category_id` int NOT NULL,
@@ -190,7 +190,7 @@ CREATE TABLE `product` (
   `featured` tinyint(1) DEFAULT '0',
   `region_id` int DEFAULT NULL,
   `grape_id` int DEFAULT NULL,
-  `color` enum('red','white','rose') COLLATE utf8mb4_general_ci DEFAULT NULL
+  `color` enum('red','white','rose') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -283,8 +283,33 @@ INSERT INTO `product` (`id`, `name`, `description`, `price`, `stock`, `category_
 CREATE TABLE `product_image` (
   `id` int NOT NULL,
   `product_id` int NOT NULL,
-  `image_url` varchar(255) COLLATE utf8mb4_general_ci NOT NULL
+  `image_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `product_image`
+--
+
+INSERT INTO `product_image` (`id`, `product_id`, `image_url`) VALUES
+(1, 215, 'assets/images/products/chateau_montrose_2016.png'),
+(2, 216, 'assets/images/products/chateau_lynch_bages_2015.png'),
+(3, 218, 'assets/images/products/chateau_palmer_2012.png'),
+(4, 230, 'assets/images/products/leflaive_puligny_2018.png'),
+(5, 245, 'assets/images/products/esclans_garrus_2021.png'),
+(6, 248, 'assets/images/products/miraval_rose_2022.png'),
+(7, 261, 'assets/images/products/dom_perignon_2013.png'),
+(8, 275, 'assets/images/products/macallan_18_sherry.png'),
+(9, 276, 'assets/images/products/hennessy_xo.png'),
+(10, 221, 'assets/images/products/sassicaia_2018.png'),
+(11, 222, 'assets/images/products/cheval_blanc_2014.png'),
+(12, 225, 'assets/images/products/chave_hermitage_2016.png'),
+(13, 240, 'assets/images/products/coche_dury_corton_charlemagne_2016.png'),
+(14, 241, 'assets/images/products/chateau_yquem_2015.png'),
+(15, 250, 'assets/images/products/tempier_bandol_rose_2021.png'),
+(16, 260, 'assets/images/products/krug_grande_cuvee_169.png'),
+(17, 282, 'assets/images/products/clase_azul_reposado.png'),
+(18, 285, 'assets/images/products/louis_xiii_cognac.png'),
+(19, 286, 'assets/images/products/johnnie_walker_blue.png');
 
 -- --------------------------------------------------------
 
@@ -294,9 +319,9 @@ CREATE TABLE `product_image` (
 
 CREATE TABLE `region` (
   `id` int NOT NULL,
-  `name` varchar(100) NOT NULL,
-  `country` varchar(100) NOT NULL DEFAULT 'France',
-  `description` text
+  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `country` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'France',
+  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
@@ -330,10 +355,10 @@ CREATE TABLE `review` (
   `id` int NOT NULL,
   `user_id` int NOT NULL,
   `product_id` int NOT NULL,
-  `comment` text COLLATE utf8mb4_general_ci,
+  `comment` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
   `rating` int NOT NULL,
   `review_date` datetime DEFAULT CURRENT_TIMESTAMP
-) ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -386,12 +411,12 @@ INSERT INTO `subcategory` (`id`, `name`, `category_id`) VALUES
 
 CREATE TABLE `user` (
   `id` int NOT NULL,
-  `last_name` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
-  `first_name` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `password` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `last_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `first_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `birth_date` date NOT NULL,
-  `role` varchar(20) COLLATE utf8mb4_general_ci DEFAULT 'client' COMMENT 'client, admin, etc.',
+  `role` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT 'client' COMMENT 'client, admin, etc.',
   `created_at` datetime DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -566,7 +591,7 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT pour la table `grape`
 --
 ALTER TABLE `grape`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT pour la table `order`

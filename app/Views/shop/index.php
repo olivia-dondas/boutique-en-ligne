@@ -1,39 +1,11 @@
 <?php
 // app/Views/shop/index.php
-// Variables disponibles : $products, $categories, $regions, $grapes, $filters, $currentPage, $totalPages, $totalProducts, $pageTitle, $baseUrl
+require_once BASE_PATH . '/app/Views/layouts/header.php';
 
 $siteName = defined('SITE_NAME') ? SITE_NAME : 'Ma Boutique';
 ?>
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= htmlspecialchars($pageTitle ?? 'Boutique') ?> - <?= htmlspecialchars($siteName) ?></title>
-    <!-- Utilisez le lien vers votre Tailwind compilé ou CDN -->
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <!-- Ou votre CSS local : -->
-    <!-- <link rel="stylesheet" href="<?= htmlspecialchars($baseUrl ?? '') ?>css/styles.css"> -->
-</head>
-<body class="bg-gray-50">
   
-    <!-- Barre de Navigation (factoriser dans un layout/header.php si possible) -->
-    <nav class="bg-white shadow-md">
-        <div class="container mx-auto px-6 py-3 flex justify-between items-center">
-            <a href="<?= htmlspecialchars($baseUrl ?? '') ?>" class="text-xl font-bold text-red-700"><?= htmlspecialchars($siteName) ?></a>
-            <div>
-                <a href="<?= htmlspecialchars($baseUrl ?? '') ?>shop" class="text-red-700 font-semibold hover:text-red-600 px-3">Boutique</a>
-                <?php if (isset($_SESSION['user_id'])): ?>
-                    <a href="<?= htmlspecialchars($baseUrl ?? '') ?>user/profile" class="text-gray-700 hover:text-red-700 px-3">Mon Profil</a>
-                    <a href="<?= htmlspecialchars($baseUrl ?? '') ?>auth/logout" class="text-gray-700 hover:text-red-700 px-3">Déconnexion</a>
-                <?php else: ?>
-                    <a href="<?= htmlspecialchars($baseUrl ?? '') ?>auth/showLoginForm" class="text-gray-700 hover:text-red-700 px-3">Connexion</a>
-                    <a href="<?= htmlspecialchars($baseUrl ?? '') ?>auth/showRegisterForm" class="text-gray-700 hover:text-red-700 px-3">Inscription</a>
-                <?php endif; ?>
-            </div>
-        </div>
-    </nav>
-    
+ 
     <main class="container mx-auto px-4 py-8">
         <div class="flex flex-col lg:flex-row gap-8">
             <!-- Colonne des filtres -->
@@ -42,8 +14,8 @@ $siteName = defined('SITE_NAME') ? SITE_NAME : 'Ma Boutique';
                     <h2 class="text-xl font-bold mb-4">Filtrer les produits</h2>
                     
                     <!-- Le formulaire doit pointer vers l'URL actuelle (shop/index ou shop) -->
-                    <form method="get" action="<?= htmlspecialchars($baseUrl ?? '') ?>shop" class="space-y-4">
-                        <!-- Filtre Catégorie -->
+
+            <form method="get" action="/boutique-en-ligne/shop" class="space-y-4">                        <!-- Filtre Catégorie -->
                         <div>
                             <label for="category_filter" class="block text-sm font-medium text-gray-700 mb-1">Catégorie</label>
                             <select id="category_filter" name="category" class="w-full p-2 border rounded-md focus:ring-red-500 focus:border-red-500">
@@ -108,7 +80,7 @@ $siteName = defined('SITE_NAME') ? SITE_NAME : 'Ma Boutique';
                             <button type="submit" class="flex-1 bg-red-700 text-white py-2 px-4 rounded-md hover:bg-red-800 transition">
                                 Appliquer Filtres
                             </button>
-                            <a href="<?= htmlspecialchars($baseUrl ?? '') ?>shop" class="flex-1 bg-gray-300 text-gray-800 py-2 px-4 rounded-md hover:bg-gray-400 transition text-center">
+                            <a href="<?= htmlspecialchars($baseUrl ?? '') ?>index.php?url=shop" class="flex-1 bg-gray-300 text-gray-800 py-2 px-4 rounded-md hover:bg-gray-400 transition text-center">
                                 Réinitialiser
                             </a>
                         </div>
@@ -130,7 +102,7 @@ $siteName = defined('SITE_NAME') ? SITE_NAME : 'Ma Boutique';
                 <?php if (empty($products)): ?>
                     <div class="bg-white rounded-lg shadow p-8 text-center">
                         <p class="text-gray-600 text-lg mb-4">Aucun produit ne correspond à vos critères de recherche.</p>
-                        <a href="<?= htmlspecialchars($baseUrl ?? '') ?>shop" class="bg-red-700 text-white px-4 py-2 rounded-md hover:bg-red-800 transition">
+                        <a href="<?= htmlspecialchars($baseUrl ?? '') ?>index.php?url=shop" class="bg-red-700 text-white px-4 py-2 rounded-md hover:bg-red-800 transition">
                             Voir tous les produits
                         </a>
                     </div>
@@ -140,6 +112,12 @@ $siteName = defined('SITE_NAME') ? SITE_NAME : 'Ma Boutique';
                             <?php 
                                 $product = $productData;
                                 $cardPath = BASE_PATH . '/app/Views/partials/product_card.php';
+ $productDetailUrl = (isset($baseUrl) ? htmlspecialchars($baseUrl) : '') . 'shop/show/' . htmlspecialchars($product['id']);
+        ?>
+        <a href="<?= $productDetailUrl ?>" 
+           class="block group bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 ease-in-out overflow-hidden"> 
+            <?php
+
                                 if (file_exists($cardPath)) {
                                     include $cardPath;
                                 } else {
@@ -147,6 +125,7 @@ $siteName = defined('SITE_NAME') ? SITE_NAME : 'Ma Boutique';
                                     break;
                                 }
                             ?>
+                            </a>
                         <?php endforeach; ?>
                     </div>
                 <?php endif; ?>
@@ -160,7 +139,7 @@ $siteName = defined('SITE_NAME') ? SITE_NAME : 'Ma Boutique';
                             $queryParams = $filters; // Utilise les filtres actuels
                             unset($queryParams['page']); // La page sera ajoutée dynamiquement
                             unset($queryParams['per_page']); // Non nécessaire dans l'URL de pagination
-                            $baseLink = htmlspecialchars($baseUrl ?? '') . 'shop?' . http_build_query($queryParams);
+                            $baseLink = htmlspecialchars($baseUrl ?? '') . 'index.php?url=shop' . (empty($queryParams) ? '' : '&' . http_build_query($queryParams));
                             $separator = empty($queryParams) ? '' : '&';
                             ?>
 
@@ -210,12 +189,7 @@ $siteName = defined('SITE_NAME') ? SITE_NAME : 'Ma Boutique';
         </div>
     </main>
 
-    <!-- Footer (factoriser dans un layout/footer.php si possible) -->
-   <footer class="bg-gray-800 text-white py-8 mt-12">
-        <div class="container mx-auto px-4 text-center">
-            <p>&copy; <?= date('Y') ?> <?= htmlspecialchars($siteName) ?>. Tous droits réservés.</p>
-        </div>
-    </footer>
+<?php
+require_once BASE_PATH . '/app/Views/layouts/footer.php';
+?>
 
-</body>
-</html>
