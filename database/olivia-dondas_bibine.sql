@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost:8889
--- Généré le : dim. 18 mai 2025 à 08:56
+-- Généré le : lun. 19 mai 2025 à 10:06
 -- Version du serveur : 8.0.40
 -- Version de PHP : 8.3.14
 
@@ -417,7 +417,7 @@ CREATE TABLE `user` (
   `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `birth_date` date NOT NULL,
   `role` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT 'client' COMMENT 'client, admin, etc.',
-  `created_at` datetime DEFAULT CURRENT_TIMESTAMP
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -425,9 +425,11 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `last_name`, `first_name`, `email`, `password`, `birth_date`, `role`, `created_at`) VALUES
-(1, 'Escobar', 'Pablo', 'escobar.pablo@gmail.com', '$2y$10$5S6l6jarLQenNDK.efmK..ga2vi308OqE8VswkugDyfzW3aGhHKMe', '1999-12-12', 'client', '2025-04-29 08:27:11'),
-(2, 'Dondas', 'Olivia', 'olivia.dondas@gmail.com', '$2y$10$eN1AmOWYGg9HBebn/NW0DuqH28iePhCQiT2RktuHXCCr2BKHYCXCm', '1989-08-29', 'user', '2025-05-09 13:45:17'),
-(3, 'Enirevec', 'Eliane', 'eliane.enirevec@gmail.com', '$2y$10$buQBOCb/pCKMzBoy3Y4RyOasaLESkoc16phCUcjNEAaeTyT7ktDIq', '1991-01-09', 'user', '2025-05-09 14:04:47');
+(1, 'Escobar', 'Pablo', 'escobar.pablo@gmail.com', '$2y$10$5S6l6jarLQenNDK.efmK..ga2vi308OqE8VswkugDyfzW3aGhHKMe', '1999-12-12', 'client', '2025-04-29 06:27:11'),
+(2, 'Dondas', 'Olivia', 'olivia.dondas@gmail.com', '$2y$10$eN1AmOWYGg9HBebn/NW0DuqH28iePhCQiT2RktuHXCCr2BKHYCXCm', '1989-08-29', 'admin', '2025-05-09 11:45:17'),
+(3, 'Enirevec', 'Eliane', 'eliane.enirevec@gmail.com', '$2y$10$buQBOCb/pCKMzBoy3Y4RyOasaLESkoc16phCUcjNEAaeTyT7ktDIq', '1991-01-09', 'client', '2025-05-09 12:04:47'),
+(6, 'D', 'Ol', 'ol.d@gmail.com', '$2y$10$OucendHYwpI0eh2v9e8hD.1svXlKMP1FXP0eVvewgU6MTY6vNynNK', '1989-11-20', 'client', '2025-05-18 13:50:22'),
+(7, 'Enirevec', 'Béverley', 'bev@gmail.com', '$2y$10$VWL6B/P45avatM3QYXXMEuTR524pWTp3ZEYD0mrb.S/SkqasUNlt2', '1993-11-09', 'client', '2025-05-18 22:31:36');
 
 -- --------------------------------------------------------
 
@@ -454,7 +456,9 @@ INSERT INTO `user_address` (`id`, `user_id`, `type`, `street`, `city`, `postcode
 (1, 2, 'shipping', '51, RUE GABRIEL AUDISIO - TERRE DE JADE', '', '', 'France', 1),
 (2, 3, 'shipping', '51, RUE GABRIEL AUDISIO - TERRE DE JADE, APPARTEMENT 1-5 1ER ETAGE BATIMENT A,', '', '', 'France', 1),
 (3, 4, 'shipping', '51, RUE GABRIEL AUDISIO - TERRE DE JADE, APPARTEMENT 1-5 1ER ETAGE BATIMENT A,', '', '', 'France', 1),
-(4, 5, 'shipping', '51, RUE GABRIEL AUDISIO - TERRE DE JADE, APPARTEMENT 1-5 1ER ETAGE BATIMENT A,', '', '', 'France', 1);
+(4, 5, 'shipping', '51, RUE GABRIEL AUDISIO - TERRE DE JADE, APPARTEMENT 1-5 1ER ETAGE BATIMENT A,', '', '', 'France', 1),
+(5, 6, 'shipping', '51 Rue Gabriel Audisio', '', '', 'France', 1),
+(6, 7, 'shipping', '1ER ETAGE BATIMENT A,', 'Nans', '13014', 'Malta', 1);
 
 --
 -- Index pour les tables déchargées
@@ -639,13 +643,13 @@ ALTER TABLE `subcategory`
 -- AUTO_INCREMENT pour la table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT pour la table `user_address`
 --
 ALTER TABLE `user_address`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Contraintes pour les tables déchargées

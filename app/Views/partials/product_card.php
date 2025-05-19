@@ -11,11 +11,11 @@ if (isset($product['image_url']) && !empty($product['image_url'])) {
     $imageUrl = 'assets/images/default-wine.jpg';
 }
 ?>
-<div class="bg-white rounded-lg shadow overflow-hidden hover:shadow-lg transition">
+<div class="bg-white rounded-lg shadow overflow-hidden hover:shadow-lg transition flex flex-col h-full min-h-[340px]">
     <img src="<?= BASE_URL . $imageUrl ?>"
          alt="<?= htmlspecialchars($product['name']) ?>"
          class="w-full h-48 object-cover">
-    <div class="p-4">
+    <div class="p-4 flex-1 flex flex-col justify-between">
         <h3 class="font-bold text-lg text-gray-900"><?= htmlspecialchars($product['name']) ?></h3>
         <p class="text-red-900 font-bold mt-2"><?= number_format($product['price'], 2) ?> €</p>
     </div>

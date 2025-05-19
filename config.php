@@ -1,5 +1,5 @@
 <?php
-// testbibine/config.php
+// config.php
 
 // 1. Configuration de l'environnement et des erreurs
 define('ENVIRONMENT', 'development'); // 'production' sur serveur live

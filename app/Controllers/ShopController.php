@@ -94,8 +94,14 @@ class ShopController {
             return;
         }
 
-        // Passer le produit à la vue
-        $this->renderView('shop/show', ['product' => $product, 'pageTitle' => $product['name']]);
+        // Récupérer les images du produit
+        $pdo = \App\Models\Database::getInstance();
+        $stmt = $pdo->prepare("SELECT image_url FROM product_image WHERE product_id = ?");
+        $stmt->execute([$product['id']]);
+        $productImages = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+        // Passer le produit et ses images à la vue
+        $this->renderView('shop/show', ['product' => $product, 'productImages' => $productImages, 'pageTitle' => $product['name']]);
     }
 
     protected function renderView(string $viewPath, array $data = []) {
