@@ -107,10 +107,7 @@ $siteName = defined('SITE_NAME') ? SITE_NAME : 'Ma Boutique';
                         </a>
                     </div>
                 <?php else: ?>
-                    <!-- Debug temporaire pour voir les IDs des produits affichés -->
-                    <?php foreach ($products as $p): ?>
-                        <span style="color:red;"><?= htmlspecialchars($p['id']) ?></span> 
-                    <?php endforeach; ?>
+               
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mt-8">
                         <?php foreach ($products as $productData): ?>
